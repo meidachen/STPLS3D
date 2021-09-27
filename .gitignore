@@ -1,0 +1,11 @@
+STPLS3D_python/
+STPLS3D_prepared/
+STPLS3D/
+.idea/
+__pycache__/
+results/
+text/
+train_log/
+utils/PDAL/
+utils/data_prepare_STPLS3D_tiling.py
+log*.txt
