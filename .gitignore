@@ -8,4 +8,11 @@ RandLA-Net/test/
 RandLA-Net/train_log/
 RandLA-Net/utils/PDAL/
 RandLA-Net/utils/data_prepare_STPLS3D_tiling.py
-log*.txt
+RandLA-Net/log*.txt
+SCF-Net/.idea/
+SCF-Net/__pycache__/
+SCF-Net/results/
+SCF-Net/test/
+SCF-Net/train_log/
+SCF-Net/utils/
+SCF-Net/log*.txt
