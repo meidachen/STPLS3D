@@ -1,8 +1,8 @@
+*.idea/
+*__pycache__/
 STPLS3D_python/
 STPLS3D_prepared/
 STPLS3D/
-RandLA-Net/.idea/
-RandLA-Net/__pycache__/
 RandLA-Net/results/
 RandLA-Net/test/
 RandLA-Net/train_log/
@@ -10,14 +10,11 @@ RandLA-Net/utils/PDAL/
 RandLA-Net/utils/data_prepare_STPLS3D_tiling.py
 RandLA-Net/log*.txt
 
-SCF-Net/.idea/
-SCF-Net/__pycache__/
 SCF-Net/results/
 SCF-Net/test/
 SCF-Net/train_log/
 SCF-Net/log*.txt
 
-KPConv-PyTorch/.idea/
-*__pycache__/
+
 KPConv-PyTorch/results/
 KPConv-PyTorch/test/
