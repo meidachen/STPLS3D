@@ -276,7 +276,7 @@ if __name__ == '__main__':
         if os.path.isfile(FLAGS.model_path+'.meta'):
             chosen_snap = FLAGS.model_path
             tester = ModelTester(model, dataset, restore_snap=chosen_snap)
-            IoUs,m_IoU,acc = tester.test(model, dataset)
+            tester.test(model, dataset)
 
         elif os.path.isdir(FLAGS.model_path):
             checkpointList = [f for f in os.listdir(FLAGS.model_path) if f.endswith('.meta')]
@@ -284,6 +284,16 @@ if __name__ == '__main__':
             m_IoU_list = []
             acc_list = []
             for checkpoint in checkpointList:
+
+                tf.keras.backend.clear_session()
+                del dataset
+                del model
+                import gc
+                gc.collect()
+                dataset = STPLS3D(FLAGS.data_folder,test_area)
+                dataset.init_input_pipeline()
+                model = Network(dataset, cfg)
+
                 tester = ModelTester(model, dataset, restore_snap=os.path.join(FLAGS.model_path,checkpoint.strip('.meta')))
                 IoUs,m_IoU,acc = tester.test(model, dataset)
                 IoUs_list.append(IoUs)
@@ -304,8 +314,6 @@ if __name__ == '__main__':
             snap_steps = [int(f[:-5].split('-')[-1]) for f in os.listdir(snap_path) if f[-5:] == '.meta']
             chosen_step = np.sort(snap_steps)[-1]
             chosen_snap = os.path.join(snap_path,'snap-{:d}'.format(chosen_step))
-            ### Model used
-            # chosen_snap = r'D:\syntheticVSreal_experiements\RandLA-Net\results\Log_2021-09-21_21-05-21\snapshots\snap-45501'
 
             tester = ModelTester(model, dataset, restore_snap=chosen_snap)
-            IoUs,m_IoU,acc = tester.test(model, dataset)
+            tester.test(model, dataset)
