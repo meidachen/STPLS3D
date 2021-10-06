@@ -33,7 +33,7 @@ import time
 
 # My libs
 from utils.config import Config
-from utils.metrics import IoU_from_confusions, smooth_metrics, fast_confusion
+from utils.metrics import IoU_from_confusions, smooth_metrics, fast_confusion, OA_from_confusions
 from utils.ply import read_ply
 
 # Datasets
@@ -146,7 +146,7 @@ def load_single_IoU(filename, n_parts):
 
 def load_snap_clouds(path, dataset, only_last=False):
 
-    cloud_folders = np.array([join(path, f) for f in listdir(path) if f.startswith('val_preds')])
+    cloud_folders = np.array([join(path, str(f, 'utf-8')) for f in listdir(path) if str(f, 'utf-8').startswith('val_preds')])
     cloud_epochs = np.array([int(f.split('_')[-1]) for f in cloud_folders])
     epoch_order = np.argsort(cloud_epochs)
     cloud_epochs = cloud_epochs[epoch_order]
@@ -164,6 +164,7 @@ def load_snap_clouds(path, dataset, only_last=False):
 
         else:
             for f in listdir(cloud_folder):
+                f = str(f, 'utf-8')
                 if f.endswith('.ply') and not f.endswith('sub.ply'):
                     data = read_ply(join(cloud_folder, f))
                     labels = data['class']
@@ -175,6 +176,7 @@ def load_snap_clouds(path, dataset, only_last=False):
         # Erase ply to save disk memory
         if c_i < len(cloud_folders) - 1:
             for f in listdir(cloud_folder):
+                f = str(f, 'utf-8')
                 if f.endswith('.ply'):
                     remove(join(cloud_folder, f))
 
@@ -185,6 +187,52 @@ def load_snap_clouds(path, dataset, only_last=False):
             Confs = np.delete(Confs, l_ind, axis=2)
 
     return cloud_epochs, IoU_from_confusions(Confs)
+
+
+def load_snap_OAs(path, dataset, only_last=False):
+
+    cloud_folders = np.array([join(path, str(f, 'utf-8')) for f in listdir(path) if str(f, 'utf-8').startswith('val_preds')])
+    cloud_epochs = np.array([int(f.split('_')[-1]) for f in cloud_folders])
+    epoch_order = np.argsort(cloud_epochs)
+    cloud_epochs = cloud_epochs[epoch_order]
+    cloud_folders = cloud_folders[epoch_order]
+
+    Confs = np.zeros((len(cloud_epochs), dataset.num_classes, dataset.num_classes), dtype=np.int32)
+    for c_i, cloud_folder in enumerate(cloud_folders):
+        if only_last and c_i < len(cloud_epochs) - 1:
+            continue
+
+        # Load confusion if previously saved
+        conf_file = join(cloud_folder, 'conf.txt')
+        if isfile(conf_file):
+            Confs[c_i] += np.loadtxt(conf_file, dtype=np.int32)
+
+        else:
+            for f in listdir(cloud_folder):
+                f = str(f, 'utf-8')
+                if f.endswith('.ply') and not f.endswith('sub.ply'):
+                    data = read_ply(join(cloud_folder, f))
+                    labels = data['class']
+                    preds = data['preds']
+                    Confs[c_i] += fast_confusion(labels, preds, dataset.label_values).astype(np.int32)
+
+            np.savetxt(conf_file, Confs[c_i], '%12d')
+
+        # Erase ply to save disk memory
+        if c_i < len(cloud_folders) - 1:
+            for f in listdir(cloud_folder):
+                f = str(f, 'utf-8')
+                if f.endswith('.ply'):
+                    remove(join(cloud_folder, f))
+
+    # Remove ignored labels from confusions
+    for l_ind, label_value in reversed(list(enumerate(dataset.label_values))):
+        if label_value in dataset.ignored_labels:
+            Confs = np.delete(Confs, l_ind, axis=1)
+            Confs = np.delete(Confs, l_ind, axis=2)
+
+    return OA_from_confusions(Confs)
+
 
 
 # ----------------------------------------------------------------------------------------------------------------------
@@ -219,7 +267,7 @@ def compare_trainings(list_of_paths, list_of_labels=None):
 
         print(path)
 
-        if ('val_IoUs.txt' in [f for f in listdir(path)]) or ('val_confs.txt' in [f for f in listdir(path)]):
+        if ('val_IoUs.txt' in [str(f, 'utf-8') for f in listdir(path)]) or ('val_confs.txt' in [str(f, 'utf-8') for f in listdir(path)]):
             config = Config()
             config.load(path)
         else:
@@ -345,6 +393,7 @@ def compare_convergences_segment(dataset, list_of_paths, list_of_names=None):
     all_class_IoUs = []
     all_snap_epochs = []
     all_snap_IoUs = []
+    all_snap_OAs = []
 
     # Load parameters
     config = Config()
@@ -353,11 +402,13 @@ def compare_convergences_segment(dataset, list_of_paths, list_of_names=None):
     class_list = [dataset.label_to_names[label] for label in dataset.label_values
                   if label not in dataset.ignored_labels]
 
-    s = '{:^10}|'.format('mean')
+    s = ''
     for c in class_list:
-        s += '{:^10}'.format(c)
+        s += '{:^10}'.format(c[:9])
+    s += '|{:^10}'.format('mIoU')
+    s += '|{:^10}'.format('OA')
     print(s)
-    print(10*'-' + '|' + 10*config.num_classes*'-')
+    print(10*config.num_classes*'-'+ '|' + 10*'-' + '|' + 10*'-')
     for path in list_of_paths:
 
         # Get validation IoUs
@@ -372,26 +423,35 @@ def compare_convergences_segment(dataset, list_of_paths, list_of_names=None):
         all_mIoUs += [mIoUs]
         all_class_IoUs += [class_IoUs]
 
-        s = '{:^10.1f}|'.format(100*mIoUs[-1])
+        s = ''
         for IoU in class_IoUs[-1]:
             s += '{:^10.1f}'.format(100*IoU)
+        s += '|{:^10.1f}'.format(100*mIoUs[-1])
+        s += '|{:^10s}'.format('-')
         print(s)
 
         # Get optional full validation on clouds
         snap_epochs, snap_IoUs = load_snap_clouds(path, dataset)
+        snap_OAs = load_snap_OAs(path, dataset)
         all_snap_epochs += [snap_epochs]
         all_snap_IoUs += [snap_IoUs]
+        all_snap_OAs += [snap_OAs]
 
-    print(10*'-' + '|' + 10*config.num_classes*'-')
-    for snap_IoUs in all_snap_IoUs:
+    print(10*config.num_classes*'-'+ '|' + 10*'-' + '|' + 10*'-')
+    for snap_IoUs, snap_OAs in zip(all_snap_IoUs, all_snap_OAs):
         if len(snap_IoUs) > 0:
-            s = '{:^10.1f}|'.format(100*np.mean(snap_IoUs[-1]))
+            s = ''
             for IoU in snap_IoUs[-1]:
                 s += '{:^10.1f}'.format(100*IoU)
+            s += '|{:^10.1f}'.format(100*np.mean(snap_IoUs[-1]))
+            s += '|{:^10.1f}'.format(100*snap_OAs[-1])
         else:
-            s = '{:^10s}'.format('-')
+            s = ''
             for _ in range(config.num_classes):
                 s += '{:^10s}'.format('-')
+            s = '{:^10s}'.format('-')
+            s += '|{:^10s}'.format('-')
+            s += '|{:^10s}'.format('-')
         print(s)
 
     # Plots
@@ -686,7 +746,7 @@ def compare_convergences_SLAM(dataset, list_of_paths, list_of_names=None):
 #
 
 
-def experiment_name_1():
+def real_data_training():
     """
     In this function you choose the results you want to plot together, to compare them as an experiment.
     Just return the list of log paths (like 'results/Log_2020-04-04_10-04-42' for example), and the associated names
@@ -695,8 +755,8 @@ def experiment_name_1():
     """
 
     # Using the dates of the logs, you can easily gather consecutive ones. All logs should be of the same dataset.
-    start = 'Log_2020-04-22_11-52-58'
-    end = 'Log_2020-05-22_11-52-58'
+    start = 'Log_2019-04-22_11-52-58'
+    end = 'Log_2022-05-22_11-52-58'
 
     # Name of the result path
     res_path = 'results'
@@ -705,9 +765,14 @@ def experiment_name_1():
     logs = np.sort([join(res_path, l) for l in listdir(res_path) if start <= l <= end])
 
     # Give names to the logs (for plot legends)
-    logs_names = ['name_log_1',
-                  'name_log_2',
-                  'name_log_3']
+    logs_names = ['potential-e300',
+                  'potential-e300',
+                  'balanced-e300',
+                  'balanced-e500',
+                  'Gallen',
+                  'OCC',
+                  'ResidentialArea_GT',
+                  'WMSC_GT',]
 
     # safe check log names
     logs_names = np.array(logs_names[:len(logs)])
@@ -715,7 +780,7 @@ def experiment_name_1():
     return logs, logs_names
 
 
-def experiment_name_2():
+def all_data_training():
     """
     In this function you choose the results you want to plot together, to compare them as an experiment.
     Just return the list of log paths (like 'results/Log_2020-04-04_10-04-42' for example), and the associated names
@@ -724,8 +789,8 @@ def experiment_name_2():
     """
 
     # Using the dates of the logs, you can easily gather consecutive ones. All logs should be of the same dataset.
-    start = 'Log_2020-04-22_11-52-58'
-    end = 'Log_2020-05-22_11-52-58'
+    start = 'Log_2021-10-05_19-57-14'
+    end = 'Log_2021-10-06_14-09-33'
 
     # Name of the result path
     res_path = 'results'
@@ -733,20 +798,24 @@ def experiment_name_2():
     # Gather logs and sort by date
     logs = np.sort([join(res_path, l) for l in listdir(res_path) if start <= l <= end])
 
-    # Optionally add a specific log at a specific place in the log list
-    logs = logs.astype('<U50')
-    logs = np.insert(logs, 0, 'results/Log_2020-04-04_10-04-42')
-
     # Give names to the logs (for plot legends)
-    logs_names = ['name_log_inserted',
-                  'name_log_1',
-                  'name_log_2',
-                  'name_log_3']
+    logs_names = ['WMSC_GT',
+                  'ResidentialArea_GT',
+                  'ResidentialArea_GT',
+                  'OCC',
+                  'Gallen',
+                  'test',]
 
     # safe check log names
     logs_names = np.array(logs_names[:len(logs)])
 
     return logs, logs_names
+
+
+
+
+
+
 
 
 # ----------------------------------------------------------------------------------------------------------------------
@@ -762,7 +831,8 @@ if __name__ == '__main__':
     ######################################################
 
     # My logs: choose the logs to show
-    logs, logs_names = experiment_name_1()
+    logs, logs_names = all_data_training()
+
 
     ################
     # Plot functions
@@ -793,6 +863,8 @@ if __name__ == '__main__':
 
     if config.dataset_task == 'cloud_segmentation':
         if config.dataset.startswith('STPLS3D'):
+            dataFolder = "../../Data/STPLS3D_prepared/RealWorldData"
+            validationDataName = 'USC_GT'
             dataset = STPLS3DDataset(config, dataFolder, validationDataName, load_data=False)
             compare_convergences_segment(dataset, logs, logs_names)
 

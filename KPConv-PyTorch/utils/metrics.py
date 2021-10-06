@@ -228,3 +228,19 @@ def IoU_from_confusions(confusions):
     IoU += mask * mIoU
 
     return IoU
+
+def OA_from_confusions(confusions):
+    """
+    Computes OA from confusion matrices.
+    :param confusions: ([..., n_c, n_c] np.int32). Can be any dimension, the confusion matrices should be described by
+    the last axes. n_c = number of classes
+    :param ignore_unclassified: (bool). True if the the first class should be ignored in the results
+    :return: ([..., 1] np.float32) Overall Acurracy
+    """
+
+    # Compute TP, FP, FN. This assume that the second to last axis counts the truths (like the first axis of a
+    # confusion matrix), and that the last axis counts the predictions (like the second axis of a confusion matrix)
+    TP = np.diagonal(confusions, axis1=-2, axis2=-1)
+    TP_plus_FN = np.sum(confusions, axis=-1)
+
+    return np.sum(TP, axis=-1) / (np.sum(TP_plus_FN, axis=-1) + 1e-6)

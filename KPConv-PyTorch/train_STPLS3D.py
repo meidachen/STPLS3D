@@ -59,7 +59,7 @@ class STPLS3DConfig(Config):
     dataset_task = ''
 
     # Number of CPU threads for the input pipeline
-    input_threads = 5
+    input_threads = 10
 
     #########################
     # Architecture definition
@@ -94,13 +94,13 @@ class STPLS3DConfig(Config):
     ###################
 
     # Radius of the input sphere
-    in_radius = 15.0
+    in_radius = 20.0
 
     # Number of kernel points
     num_kernel_points = 15
 
     # Size of the first subsampling grid in meter
-    first_subsampling_dl = 0.3
+    first_subsampling_dl = 0.2
 
     # Radius of convolution in "number grid cell". (2.5 is the standard value)
     conv_radius = 2.5
@@ -119,7 +119,7 @@ class STPLS3DConfig(Config):
 
     # Choice of input features
     first_features_dim = 128
-    in_features_dim = 5
+    in_features_dim = 4
 
     # Can the network learn modulations
     modulated = False
@@ -141,7 +141,7 @@ class STPLS3DConfig(Config):
     #####################
 
     # Maximal number of epochs
-    max_epoch = 200
+    max_epoch = 500
 
     # Learning rate management
     learning_rate = 1e-2
@@ -150,23 +150,23 @@ class STPLS3DConfig(Config):
     grad_clip_norm = 100.0
 
     # Number of batch
-    batch_num = 6
+    batch_num = 7
 
     # Number of steps per epochs
     epoch_steps = 300
 
     # Number of validation examples per epoch
-    validation_size = 10
+    validation_size = 20
 
     # Number of epoch between each checkpoint
-    checkpoint_gap = 1
+    checkpoint_gap = 50
 
     # Augmentations
     augment_scale_anisotropic = True
     augment_symmetries = [True, False, False]
     augment_rotation = 'vertical'
-    augment_scale_min = 0.8
-    augment_scale_max = 1.2
+    augment_scale_min = 0.95
+    augment_scale_max = 1.05
     augment_noise = 0.001
     augment_color = 0.8
 
@@ -195,9 +195,11 @@ if __name__ == '__main__':
 
     # Set which gpu is going to be used
     GPU_ID = "0,1,2"
-    cudaDevice = '2'
-    dataFolder = "E:\STPLS3D\STPLS3D_prepared\KpConv_RealWorldData"
-    validationDataName = 'USC_GT'
+    cudaDevice = '1'
+    dataFolder = "../../Data/STPLS3D_prepared/RealWorldData"
+    validationDataName = 'ResidentialArea_GT'
+
+    # ['ResidentialArea_GT', 'WMSC_GT', 'USC_GT', 'OCC_GT', 'GalenCenter_GT']
 
     # Set GPU visible device
     os.environ['CUDA_VISIBLE_DEVICES'] = GPU_ID
@@ -270,7 +272,7 @@ if __name__ == '__main__':
                              pin_memory=True)
 
     # Calibrate samplers
-    training_sampler.calibration(training_loader, verbose=True)
+    training_sampler.calibration(training_loader, verbose=False)
     test_sampler.calibration(test_loader, verbose=True)
 
     # Optional debug functions

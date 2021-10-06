@@ -131,12 +131,6 @@ class STPLS3DDataset(PointCloudDataset):
         if not load_data:
             return
 
-        ###################
-        # Prepare ply files
-        ###################
-
-        self.prepare_STPLS3D_ply()
-
         ################
         # Load ply files
         ################
@@ -520,6 +514,8 @@ class STPLS3DDataset(PointCloudDataset):
 
                 # Update epoch indice
                 self.epoch_i += 1
+                if self.epoch_i >= int(self.epoch_inds.shape[1]):
+                    self.epoch_i -= int(self.epoch_inds.shape[1])
 
             # Get points from tree structure
             points = np.array(self.input_trees[cloud_ind].data, copy=False)
@@ -622,70 +618,6 @@ class STPLS3DDataset(PointCloudDataset):
 
         return input_list
 
-    def prepare_STPLS3D_ply(self):
-
-        print('\nPreparing ply files')
-        t0 = time.time()
-
-        # Folder for the ply files
-        ply_path = join(self.path, self.train_path)
-        if not exists(ply_path):
-            makedirs(ply_path)
-
-        for cloud_name in self.cloud_names:
-
-            # Pass if the cloud has already been computed
-            cloud_file = join(ply_path, cloud_name + '.ply')
-            if exists(cloud_file):
-                continue
-
-            # Get rooms of the current cloud
-            cloud_folder = join(self.path, cloud_name)
-            room_folders = [join(cloud_folder, room) for room in listdir(cloud_folder) if isdir(join(cloud_folder, room))]
-
-            # Initiate containers
-            cloud_points = np.empty((0, 3), dtype=np.float32)
-            cloud_colors = np.empty((0, 3), dtype=np.uint8)
-            cloud_classes = np.empty((0, 1), dtype=np.int32)
-
-            # Loop over rooms
-            for i, room_folder in enumerate(room_folders):
-
-                print('Cloud %s - Room %d/%d : %s' % (cloud_name, i+1, len(room_folders), room_folder.split('/')[-1]))
-
-                for object_name in listdir(join(room_folder, 'Annotations')):
-
-                    if object_name[-4:] == '.txt':
-
-                        # Text file containing point of the object
-                        object_file = join(room_folder, 'Annotations', object_name)
-
-                        # Object class and ID
-                        tmp = object_name[:-4].split('_')[0]
-                        if tmp in self.name_to_label:
-                            object_class = self.name_to_label[tmp]
-                        elif tmp in ['stairs']:
-                            object_class = self.name_to_label['clutter']
-                        else:
-                            raise ValueError('Unknown object name: ' + str(tmp))
-
-
-                        # Read object points and colors
-                        object_data = np.loadtxt(object_file, dtype=np.float32)
-
-                        # Stack all data
-                        cloud_points = np.vstack((cloud_points, object_data[:, 0:3].astype(np.float32)))
-                        cloud_colors = np.vstack((cloud_colors, object_data[:, 3:6].astype(np.uint8)))
-                        object_classes = np.full((object_data.shape[0], 1), object_class, dtype=np.int32)
-                        cloud_classes = np.vstack((cloud_classes, object_classes))
-
-            # Save as ply
-            write_ply(cloud_file,
-                      (cloud_points, cloud_colors, cloud_classes),
-                      ['x', 'y', 'z', 'red', 'green', 'blue', 'class'])
-
-        print('Done in {:.1f}s'.format(time.time() - t0))
-        return
 
     def load_subsampled_clouds(self):
 

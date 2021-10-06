@@ -585,7 +585,7 @@ class ModelTrainer:
             files = val_loader.dataset.files
             for i, file_path in enumerate(files):
                 pot_points = np.array(val_loader.dataset.pot_trees[i].data, copy=False)
-                cloud_name = file_path.split('\\')[-1]
+                cloud_name = file_path.split('/')[-1]
                 pot_name = join(pot_path, cloud_name)
                 pots = val_loader.dataset.potentials[i].numpy().astype(np.float32)
                 write_ply(pot_name,
@@ -624,7 +624,7 @@ class ModelTrainer:
                 preds = (sub_preds[val_loader.dataset.test_proj[i]]).astype(np.int32)
 
                 # Path of saved validation file
-                cloud_name = file_path.split('\\')[-1]
+                cloud_name = file_path.split('/')[-1]
                 val_name = join(val_path, cloud_name)
 
                 # Save file
