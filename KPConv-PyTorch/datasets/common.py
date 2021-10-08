@@ -454,7 +454,6 @@ class PointCloudDataset(Dataset):
 
         return li
 
-
     def segmentation_inputs(self,
                             stacked_points,
                             stacked_features,

@@ -1517,12 +1517,40 @@ def debug_batch_and_neighbors_calib(dataset, loader):
 
     for epoch in range(10):
 
-        for batch_i, input_list in enumerate(loader):
+        print()
+
+        for batch_i, batch in enumerate(loader):
             # print(batch_i, tuple(points.shape),  tuple(normals.shape), labels, indices, in_sizes)
 
             # New time
             t = t[-1:]
             t += [time.time()]
+
+            # Update estim_b (low pass filter)
+
+            s = '\n'
+
+            N_list = []
+            n_max_list = []
+            p_max_list = []
+            for neighbs, pools in zip(batch.neighbors, batch.pools):
+                N_list.append(neighbs.shape[0])
+                n_max_list.append(neighbs.shape[1])
+                p_max_list.append(pools.shape[1])
+
+                N = neighbs.shape[0]
+                n_max = neighbs.shape[1]
+                p_max = pools.shape[1]
+
+
+                s += '[{:6d},{:3d}, K, 3]  |  '.format(N, n_max)
+                s += '[{:6d},{:3d}->K, f1]  |  '.format(N, n_max)
+                s += '[{:6d}, K, f1->f2]'.format(N)
+                s += '\n'
+
+            s += '\n'
+            print(s)
+            print('-------------------------------------------')
 
             # Pause simulating computations
             time.sleep(0.01)
@@ -1531,13 +1559,13 @@ def debug_batch_and_neighbors_calib(dataset, loader):
             # Average timing
             mean_dt = 0.9 * mean_dt + 0.1 * (np.array(t[1:]) - np.array(t[:-1]))
 
-            # Console display (only one per second)
-            if (t[-1] - last_display) > 1.0:
-                last_display = t[-1]
-                message = 'Step {:08d} -> Average timings (ms/batch) {:8.2f} {:8.2f} '
-                print(message.format(batch_i,
-                                     1000 * mean_dt[0],
-                                     1000 * mean_dt[1]))
+            # # Console display (only one per second)
+            # if (t[-1] - last_display) > 1.0:
+            #     last_display = t[-1]
+            #     message = 'Step {:08d} -> Average timings (ms/batch) {:8.2f} {:8.2f} '
+            #     print(message.format(batch_i,
+            #                          1000 * mean_dt[0],
+            #                          1000 * mean_dt[1]))
 
         print('************* Epoch ended *************')
 

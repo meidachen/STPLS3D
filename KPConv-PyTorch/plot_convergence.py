@@ -437,6 +437,9 @@ def compare_convergences_segment(dataset, list_of_paths, list_of_names=None):
         all_snap_IoUs += [snap_IoUs]
         all_snap_OAs += [snap_OAs]
 
+    # Print
+    # *****
+
     print(10*config.num_classes*'-'+ '|' + 10*'-' + '|' + 10*'-')
     for snap_IoUs, snap_OAs in zip(all_snap_IoUs, all_snap_OAs):
         if len(snap_IoUs) > 0:
@@ -453,6 +456,25 @@ def compare_convergences_segment(dataset, list_of_paths, list_of_names=None):
             s += '|{:^10s}'.format('-')
             s += '|{:^10s}'.format('-')
         print(s)
+
+
+    print('\n\ncopy paste version\n')
+    for snap_IoUs, snap_OAs in zip(all_snap_IoUs, all_snap_OAs):
+        if len(snap_IoUs) > 0:
+            s = ''
+            for IoU in snap_IoUs[-1]:
+                s += '{:.2f} '.format(100*IoU)
+            s += '{:.2f} '.format(100*np.mean(snap_IoUs[-1]))
+            s += '{:.2f}'.format(100*snap_OAs[-1])
+
+        else:
+            s = ''
+            for _ in range(config.num_classes):
+                s += '{:^3s} '.format('-')
+            s += '{:^3s} '.format('-')
+            s += '{:^3s}'.format('-')
+        print(s)
+    print('\n\n')
 
     # Plots
     # *****
@@ -790,7 +812,7 @@ def all_data_training():
 
     # Using the dates of the logs, you can easily gather consecutive ones. All logs should be of the same dataset.
     start = 'Log_2021-10-05_19-57-14'
-    end = 'Log_2021-10-06_14-09-33'
+    end = 'Log_2023-10-07_18-13-35'
 
     # Name of the result path
     res_path = 'results'
@@ -801,9 +823,10 @@ def all_data_training():
     # Give names to the logs (for plot legends)
     logs_names = ['WMSC_GT',
                   'ResidentialArea_GT',
-                  'ResidentialArea_GT',
-                  'OCC',
-                  'Gallen',
+                  'USC_GT',
+                  'USC_GT',
+                  'OCC_GT',
+                  'test',
                   'test',]
 
     # safe check log names

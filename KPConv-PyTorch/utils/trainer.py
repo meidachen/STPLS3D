@@ -199,6 +199,8 @@ class ModelTrainer:
                     torch.nn.utils.clip_grad_value_(net.parameters(), config.grad_clip_norm)
                 self.optimizer.step()
                 torch.cuda.synchronize(self.device)
+                
+                torch.cuda.empty_cache()
 
                 t += [time.time()]
 

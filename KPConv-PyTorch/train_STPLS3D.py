@@ -94,7 +94,7 @@ class STPLS3DConfig(Config):
     ###################
 
     # Radius of the input sphere
-    in_radius = 20.0
+    in_radius = 18.0
 
     # Number of kernel points
     num_kernel_points = 15
@@ -150,7 +150,7 @@ class STPLS3DConfig(Config):
     grad_clip_norm = 100.0
 
     # Number of batch
-    batch_num = 7
+    batch_num = 6
 
     # Number of steps per epochs
     epoch_steps = 300
@@ -194,10 +194,11 @@ if __name__ == '__main__':
     ############################
 
     # Set which gpu is going to be used
-    GPU_ID = "0,1,2"
-    cudaDevice = '1'
-    dataFolder = "../../Data/STPLS3D_prepared/RealWorldData"
-    validationDataName = 'ResidentialArea_GT'
+    GPU_ID = "1"
+    cudaDevice = '0'
+    dataFolder1 = "../../Data/STPLS3D_prepared/RealWorldData"
+    dataFolder2 = "../../Data/STPLS3D_prepared/SyntheticData"
+    validationDataName = 'OCC_GT'
 
     # ['ResidentialArea_GT', 'WMSC_GT', 'USC_GT', 'OCC_GT', 'GalenCenter_GT']
 
@@ -250,8 +251,8 @@ if __name__ == '__main__':
 
 
     # Initialize datasets
-    training_dataset = STPLS3DDataset(config,dataFolder,validationDataName,set='training', use_potentials=True)
-    test_dataset = STPLS3DDataset(config,dataFolder,validationDataName,set='validation', use_potentials=True)
+    training_dataset = STPLS3DDataset(config,dataFolder2,validationDataName,set='training', use_potentials=True)
+    test_dataset = STPLS3DDataset(config,dataFolder1,validationDataName,set='validation', use_potentials=True)
 
     # Initialize samplers
     training_sampler = STPLS3DSampler(training_dataset)
@@ -272,13 +273,13 @@ if __name__ == '__main__':
                              pin_memory=True)
 
     # Calibrate samplers
-    training_sampler.calibration(training_loader, verbose=False)
+    training_sampler.calibration(training_loader, verbose=True)
     test_sampler.calibration(test_loader, verbose=True)
 
     # Optional debug functions
-    # debug_timing(training_dataset, training_loader)
-    # debug_timing(test_dataset, test_loader)
-    # debug_upsampling(training_dataset, training_loader)
+    #debug_timing(training_dataset, training_loader)
+    #debug_upsampling(training_dataset, training_loader)
+    #debug_batch_and_neighbors_calib(training_dataset, training_loader)
 
     print('\nModel Preparation')
     print('*****************')
