@@ -824,8 +824,15 @@ def all_data_training():
     logs_names = ['WMSC_GT',
                   'ResidentialArea_GT',
                   'USC_GT',
-                  'USC_GT',
                   'OCC_GT',
+                  'Only_synthetic->OCC_GT',
+                  'Real->OCC_GT',
+                  'Only_synthetic->USC_GT',
+                  'Only_synthetic->WMSC_GT',
+                  'Only_synthetic->Residential',
+                  'Only_synthetic->Gallen_GT',
+                  'Real->USC_GT',
+                  'Real->WMSC_GT',
                   'test',
                   'test',]
 
@@ -855,6 +862,8 @@ if __name__ == '__main__':
 
     # My logs: choose the logs to show
     logs, logs_names = all_data_training()
+
+    print(logs)
 
 
     ################

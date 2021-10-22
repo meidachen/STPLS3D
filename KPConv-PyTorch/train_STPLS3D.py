@@ -196,9 +196,9 @@ if __name__ == '__main__':
     # Set which gpu is going to be used
     GPU_ID = "1"
     cudaDevice = '0'
-    dataFolder1 = "../../Data/STPLS3D_prepared/RealWorldData"
-    dataFolder2 = "../../Data/STPLS3D_prepared/SyntheticData"
-    validationDataName = 'OCC_GT'
+    dataFolder_val = "../../Data/STPLS3D_prepared/RealWorldData"
+    dataFolder_train = "../../Data/STPLS3D_prepared/RealWorldData"
+    validationDataName = 'WMSC_GT'
 
     # ['ResidentialArea_GT', 'WMSC_GT', 'USC_GT', 'OCC_GT', 'GalenCenter_GT']
 
@@ -251,8 +251,8 @@ if __name__ == '__main__':
 
 
     # Initialize datasets
-    training_dataset = STPLS3DDataset(config,dataFolder2,validationDataName,set='training', use_potentials=True)
-    test_dataset = STPLS3DDataset(config,dataFolder1,validationDataName,set='validation', use_potentials=True)
+    training_dataset = STPLS3DDataset(config, dataFolder_train, validationDataName,set='training', use_potentials=True)
+    test_dataset = STPLS3DDataset(config, dataFolder_val, validationDataName,set='validation', use_potentials=True)
 
     # Initialize samplers
     training_sampler = STPLS3DSampler(training_dataset)
