@@ -1,0 +1,92 @@
+GENERAL:
+  task: train  # train, test
+  manual_seed: 123
+  model_dir: model/hais/hais.py
+  dataset_dir: data/stpls3d_inst.py
+
+DATA:
+  data_root: dataset
+  dataset: Synthetic_v3_InstanceSegmentation
+  filename_suffix: _inst_nostuff.pth
+
+  classes: 15
+  ignore_label: -100
+  class_weight: [1.0, 1.0, 43.985250737463126, 21.884955752212388, 1.831858407079646, 25.103244837758112, 31.46509341199607, 21.807276302851523, 24.012782694198624, 54.44739429695182, 114.35791543756146, 81.23402163225173, 43.57227138643068, 9.682399213372666, 22.350049164208457]
+
+
+  input_channel: 3
+  scale: 3   # voxel_size = 1 / scale, scale 50 -> voxel_size 0.02m
+  batch_size: 12
+  full_scale: [128, 512]
+  max_npoint: 250000
+  mode: 4 # 4=mean
+
+STRUCTURE:
+  model_name: hais
+  width: 16
+  block_residual: True
+  block_reps: 2
+  use_coords: True
+
+TRAIN:
+  epochs: 500
+  train_workers: 6 # data loader workers
+  optim: Adam # Adam or SGD
+  lr: 0.001
+  step_epoch: 200
+  multiplier: 0.5
+  momentum: 0.9
+  weight_decay: 0.0001
+  save_freq: 16  # also eval_freq
+  loss_weight: [1.0, 1.0, 1.0, 1.0] # semantic_loss, offset_norm_loss, score_loss, mask_loss
+
+  fg_thresh: 1.
+  bg_thresh: 0.
+
+  score_scale: 3 # the minimal voxel size is 2cm
+  score_fullscale: 20
+  score_mode: 4 # mean
+  pretrain_path:
+  pretrain_module: []
+  fix_module: []
+
+
+  point_aggr_radius: 0.9
+  cluster_shift_meanActive: 3
+  prepare_epochs: 100
+
+  cal_iou_based_on_mask: True
+  cal_iou_based_on_mask_start_epoch: 200
+
+  use_mask_filter_score_feature: True
+  use_mask_filter_score_feature_start_epoch: 200
+  mask_filter_score_feature_thre: 0.5
+  
+  using_set_aggr_in_training: False
+  using_set_aggr_in_testing: True
+
+  max_proposal_num: 200
+
+TEST:
+  split: val
+  test_epoch: 500
+  test_workers: 10
+  test_seed: 567
+
+  using_NMS: False
+  TEST_NMS_THRESH: 0.3
+  TEST_SCORE_THRESH: 0.09
+  TEST_NPOINT_THRESH: 15
+
+  eval: True
+  save_semantic: False
+  save_pt_offsets: False
+  save_instance: False
+
+  test_mask_score_thre: -0.5 # bias fg << bg
+
+
+  
+
+
+
