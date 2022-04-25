@@ -95,6 +95,7 @@ python setup.py build_ext develop
 ```
 
 - Preparing the dataset
+
 Download the [data](https://webdisk.ict.usc.edu/index.php/s/8XkiYhBiDwf2rUP), unzip it and place it under STPLS3D/HAIS/dataset.
 ```
 HAIS
