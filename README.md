@@ -58,7 +58,7 @@ Note that not all datasets we are currently providing have all the semantic labe
 
 ### (3) Demo
 
-<p align="center"> <a href="https://youtu.be/6wYWVo6Cmfs"><img src="imgs/STPLS3D_workflow" width="80%"></a> </p>
+<p align="center"> <a href="https://youtu.be/6wYWVo6Cmfs"><img src="imgs/STPLS3D_workflow.png" width="80%"></a> </p>
 
 
 ### (4) Training and Evaluation
