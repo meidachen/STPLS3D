@@ -20,7 +20,7 @@ This is the official repository of the **STPLS3D** dataset. For technical detail
 
 we have built a large-scale photogrammetry 3D point cloud dataset, termed Semantic Terrain Points Labeling - Synthetic 3D (STPLS3D), which is composed of high-quality, rich-annotated point clouds from real-world and synthetic environments. 
 
-<p align="center"> <img src="imgs/STPLS3D.png" width="100%"> </p>
+<p align="center"> <img src="imgs/STPLS3D.png" width="80%"> </p>
 
 #### 2.2 Data Collection
 
