@@ -5,7 +5,7 @@
 This is the official repository of the **STPLS3D** dataset. For technical details, please refer to:
 
 **STPLS3D: A Large-Scale Synthetic and Real Aerial Photogrammetry 3D Point Cloud Dataset** <br />
-[Meida Chen](https://scholar.google.com/citations?user=ii7ZwfQAAAAJ&hl=en), [Qingyong Hu](https://qingyonghu.github.io/), [Thomas Hugues](https://huguesthomas.github.io/), [Andrew Feng](https://scholar.google.com/citations?user=JKWxGfsAAAAJ&hl=en), [Yu Hou](https://www.yuhou.info/), [Kyle McCullough](https://ict.usc.edu/about-us/leadership/research-leadership/kyle-mccullough/), [Lucio Soibelman](https://viterbi.usc.edu/directory/faculty/Soibelman/Lucio), . <br />
+[Meida Chen](https://scholar.google.com/citations?user=ii7ZwfQAAAAJ&hl=en), [Qingyong Hu](https://qingyonghu.github.io/), [Thomas Hugues](https://huguesthomas.github.io/), [Andrew Feng](https://scholar.google.com/citations?user=JKWxGfsAAAAJ&hl=en), [Yu Hou](https://www.yuhou.info/), [Kyle McCullough](https://ict.usc.edu/about-us/leadership/research-leadership/kyle-mccullough/), [Lucio Soibelman](https://viterbi.usc.edu/directory/faculty/Soibelman/Lucio). <br />
 **[[Paper](https://arxiv.org/abs/2203.09065)] [[Project page](https://www.stpls3d.com/)] [[Video](https://youtu.be/6wYWVo6Cmfs)]** <br />
 
 ### (1) Our Focus
@@ -95,7 +95,7 @@ python setup.py build_ext develop
 ```
 
 - Preparing the dataset
-Download the [data] (https://webdisk.ict.usc.edu/index.php/s/8XkiYhBiDwf2rUP), unzip it and place it under STPLS3D/HAIS/dataset.
+Download the [data](https://webdisk.ict.usc.edu/index.php/s/8XkiYhBiDwf2rUP), unzip it and place it under STPLS3D/HAIS/dataset.
 ```
 HAIS
 ├── dataset
@@ -147,11 +147,11 @@ CUDA_VISIBLE_DEVICES=1 python test.py --config config/hais_run_stpls3d.yaml --pr
 ### Citation
 If you find our work useful in your research, please consider citing:
 
-	@inproceedings{hu2020towards,
-	  title={Towards Semantic Segmentation of Urban-Scale 3D Point Clouds: A Dataset, Benchmarks and Challenges},
-	  author={Hu, Qingyong and Yang, Bo and Khalid, Sheikh and Xiao, Wen and Trigoni, Niki and Markham, Andrew},
-      booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
-	  year={2021}
+	@article{chen2022stpls3d,
+	  title={STPLS3D: A Large-Scale Synthetic and Real Aerial Photogrammetry 3D Point Cloud Dataset},
+	  author={Chen, Meida and Hu, Qingyong and Hugues, Thomas and Feng, Andrew and Hou, Yu and McCullough, Kyle and Soibelman, Lucio},
+	  journal={arXiv preprint arXiv:2203.09065},
+	  year={2022}
 	}
 
 ### Updates
