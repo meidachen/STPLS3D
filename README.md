@@ -80,26 +80,22 @@ Download the [data](https://webdisk.ict.usc.edu/index.php/s/uHCcdsExBnxqQiZ) and
 
 ```
 STPLS3D
-  ├── RealWorldData
-      ├── OCCC_points.ply
-         .
-         .
-      └── WMSC_points.ply
-  ├── Synthetic_v1
-      ├── OCCC_points.ply
-         .
-         .
-      └── WMSC_points.ply
-  ├── Synthetic_v2
-      ├── OCCC_points.ply
-         .
-         .
-      └── WMSC_points.ply
-  ├── Synthetic_v3
-      ├── OCCC_points.ply
-         .
-         .
-      └── WMSC_points.ply
+├── RealWorldData
+│   ├── OCCC_points.ply
+│   ├── ...
+│   └── WMSC_points.ply
+├── Synthetic_v1
+│   ├── Austin.ply
+│   ├── ...
+│   └── TownshipofWashington.ply
+├── Synthetic_v2
+│   ├── 2_points_GTv2.ply
+│   ├── ...
+│   └── j_points_GTv2.ply
+└── Synthetic_v3
+    ├── 1_points_GTv3.ply
+    ├── ...
+    └── 25_points_GTv3.ply
 ```
 
 - Start training:
@@ -149,9 +145,7 @@ HAIS
        ├── 1_points_GTv3.txt
        ├── 2_points_GTv3.txt
        ├── 3_points_GTv3.txt
-       .
-       .
-       .
+       ├── ...
        ├── 23_points_GTv3.txt
        ├── 24_points_GTv3.txt
        └── 25_points_GTv3.txt
