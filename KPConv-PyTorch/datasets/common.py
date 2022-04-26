@@ -67,7 +67,6 @@ def grid_subsampling(points, features=None, labels=None, sampleDl=0.1, verbose=0
                                          sampleDl=sampleDl,
                                          verbose=verbose)
     else:
-        print (sampleDl)
         return cpp_subsampling.subsample(points,
                                          features=features,
                                          classes=labels,
@@ -291,7 +290,7 @@ class PointCloudDataset(Dataset):
         if self.config.augment_scale_anisotropic:
             scale = np.random.rand(points.shape[1]) * (max_s - min_s) + min_s
         else:
-            scale = np.random.rand() * (max_s - min_s) - min_s
+            scale = np.random.rand() * (max_s - min_s) + min_s
 
         # Add random symmetries to the scale factor
         symmetries = np.array(self.config.augment_symmetries).astype(np.int32)
@@ -453,6 +452,7 @@ class PointCloudDataset(Dataset):
         li += [stacked_features, labels]
 
         return li
+
 
     def segmentation_inputs(self,
                             stacked_points,

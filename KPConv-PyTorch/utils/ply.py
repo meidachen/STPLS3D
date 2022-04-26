@@ -271,7 +271,7 @@ def write_ply(filename, field_list, field_names, triangular_faces=None):
     # Add extension if not there
     if not filename.endswith('.ply'):
         filename += '.ply'
-    print (filename)
+
     # open in text mode to write the header
     with open(filename, 'w') as plyfile:
 
