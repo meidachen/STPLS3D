@@ -64,7 +64,7 @@ Only synthetic datasets v2 and v3 have the instance labels.
 
 #### 3.1 Semantic segmentation:
 
-<p align="center"> <img src="imgs/SemanticSegmentationWvaluationOnWMSC.JPG" width="80%"> </p>
+<p align="center"> <img src="imgs/SemanticSegmentationEvaluationOnWMSC.JPG" width="80%"> </p>
 
 #### 3.2 Instance segmentation:
 
