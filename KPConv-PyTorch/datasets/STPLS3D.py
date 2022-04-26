@@ -79,7 +79,7 @@ class STPLS3DDataset(PointCloudDataset):
         self.ignored_labels = np.array([])
 
         # Dataset folder
-        self.path = 'E:\ECCV_workshop\SemanticSegmentation\STPLS3D'
+        self.path = '../../Data/STPLS3D'
 
         # Type of task conducted on this dataset
         self.dataset_task = 'cloud_segmentation'
