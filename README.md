@@ -72,7 +72,7 @@ Here we provide the training and evaluation script for both semantic and instanc
 
 ### 4.1 Semantic segmentation:
 
-***[KpConv](https://github.com/meidachen/STPLS3D/tree/main/KPConv-PyTorch):*** The [environment setup](https://github.com/HuguesTHOMAS/KPConv-PyTorch/blob/master/INSTALL.md) is the same as the official [KpConv](https://github.com/HuguesTHOMAS/KPConv-PyTorch) release. We follow the same steps as shown [here](https://github.com/HuguesTHOMAS/KPConv-PyTorch/blob/master/doc/scene_segmentation_guide.md) to evaluate KpConv on our STPLS3D dataset.
+***[KpConv](https://github.com/meidachen/STPLS3D/tree/main/KPConv-PyTorch) (Ubuntu and Windows 10):*** The [environment setup](https://github.com/HuguesTHOMAS/KPConv-PyTorch/blob/master/INSTALL.md) is the same as the official [KpConv](https://github.com/HuguesTHOMAS/KPConv-PyTorch) release. We follow the same steps as shown [here](https://github.com/HuguesTHOMAS/KPConv-PyTorch/blob/master/doc/scene_segmentation_guide.md) to evaluate KpConv on our STPLS3D dataset.
 
 - Preparing the dataset
 
@@ -113,7 +113,7 @@ python3 test_models.py
 
 ### 4.2 Instance segmentation:
 
-***[HAIS](https://github.com/meidachen/STPLS3D/tree/main/HAIS):*** The environment setup is the same as the official [HAIS](https://github.com/hustvl/HAIS) release
+***[HAIS](https://github.com/meidachen/STPLS3D/tree/main/HAIS) (Ubuntu):*** The environment setup is the same as the official [HAIS](https://github.com/hustvl/HAIS) release
 
 - Setup the environment
 ```
