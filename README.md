@@ -26,7 +26,11 @@ we have built a large-scale photogrammetry 3D point cloud dataset, termed Semant
 
 We first collect real-world aerial images using photogrammetry best practices with quadcopter drone flight at a low altitude with significant overlaps between adjacent photos. We then reconstructed point clouds with 1.27 km^2 landscape following the standard photogrammetry pipeline. Next, we follow the same UAV path and flying pattern to generate 62 synthetic point clouds with different architectural styles, vegetation types, and terrain shapes. The synthetic dataset covers about 16 km^2 of the city landscape, with up to 18 fine-grained semantic classes and 14 instance classes. 
 
-#### 2.3 Semantic Annotations
+#### 2.3 Synthetic data generation workflow demo
+
+<p align="center"> <a href="https://youtu.be/6wYWVo6Cmfs"><img src="imgs/STPLS3D_workflow.png" width="80%"></a> </p>
+
+#### 2.4 Semantic Annotations
 
 - 0-Ground: including grass, paved road, dirt, etc.
 - 1-Building: including commercial, residential, educational buildings.
@@ -48,31 +52,27 @@ We first collect real-world aerial images using photogrammetry best practices wi
 - 18-Dirt: bare earth.
 - 19-Grass: including grass lawn, wild grass, etc.
 
-The ground points that don't have the material available (15, 18, 19) are labeled with 0.
+Note that not all datasets we are currently providing have all the semantic labels available, the ground points that don't have the material available (15, 18, 19) are labeled with 0.
 
-### 2.4 Instance annotations
+#### 2.5 Instance annotations
 
-The ground is labeled with -100. Window instance is currently per building but not per window but could be easily post-processed using connect component algorithm. Our experiments did not include the window instances. 
+The ground is labeled with -100. Window instance is currently per building but not per window but could be post-processed using connect component algorithm. Our experiments did not include the window instances. 
 
-Note that not all datasets we are currently providing have all the semantic labels available, and only synthetic datasets v2 and v3 have the instance labels.
+Only synthetic datasets v2 and v3 have the instance labels.
 
-### (3) Demo
-
-<p align="center"> <a href="https://youtu.be/6wYWVo6Cmfs"><img src="imgs/STPLS3D_workflow.png" width="80%"></a> </p>
-
-
-### (4) Training and Evaluation
+### (3) Training and Evaluation
 Here we provide the training and evaluation script for both semantic and instance segmentation.
 
-Semantic segmentation:
-- [KpConv](https://github.com/HuguesTHOMAS/KPConv-PyTorch)
-- [RandLA-Net](https://github.com/QingyongHu/RandLA-Net)
-- [SCF_Net](https://github.com/leofansq/SCF-Net)
+#### 3.1 Semantic segmentation:
 
-Instance segmentation:
-- [HAIS](https://github.com/hustvl/HAIS)
+#### [KpConv](https://github.com/HuguesTHOMAS/KPConv-PyTorch)
+#### [RandLA-Net](https://github.com/QingyongHu/RandLA-Net)
+#### [SCF_Net](https://github.com/leofansq/SCF-Net)
 
-HAIS setup is the same as the official [HAIS](https://github.com/hustvl/HAIS) release
+#### 3.2 Instance segmentation:
+
+#### HAIS: 
+The environment setup is the same as the official [HAIS](https://github.com/hustvl/HAIS) release
 
 - Setup the environment
 ```
@@ -101,31 +101,15 @@ Download the [data](https://webdisk.ict.usc.edu/index.php/s/8XkiYhBiDwf2rUP), un
 HAIS
 ├── dataset
    └── Synthetic_v3_InstanceSegmentation
-       ├── 10_points_GTv3.txt
-       ├── 11_points_GTv3.txt
-       ├── 12_points_GTv3.txt
-       ├── 13_points_GTv3.txt
-       ├── 14_points_GTv3.txt
-       ├── 15_points_GTv3.txt
-       ├── 16_points_GTv3.txt
-       ├── 17_points_GTv3.txt
-       ├── 18_points_GTv3.txt
-       ├── 19_points_GTv3.txt
        ├── 1_points_GTv3.txt
-       ├── 20_points_GTv3.txt
-       ├── 21_points_GTv3.txt
-       ├── 22_points_GTv3.txt
-       ├── 23_points_GTv3.txt
-       ├── 24_points_GTv3.txt
-       ├── 25_points_GTv3.txt
        ├── 2_points_GTv3.txt
        ├── 3_points_GTv3.txt
-       ├── 4_points_GTv3.txt
-       ├── 5_points_GTv3.txt
-       ├── 6_points_GTv3.txt
-       ├── 7_points_GTv3.txt
-       ├── 8_points_GTv3.txt
-       └── 9_points_GTv3.txt
+       .
+       .
+       .
+       ├── 23_points_GTv3.txt
+       ├── 24_points_GTv3.txt
+       └── 25_points_GTv3.txt
 ```
 
 ```
