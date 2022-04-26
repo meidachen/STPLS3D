@@ -71,7 +71,7 @@ Here we provide the training and evaluation script for both semantic and instanc
 
 #### 3.2 Instance segmentation:
 
-#### HAIS: 
+#### [HAIS](https://github.com/meidachen/STPLS3D/tree/main/HAIS): 
 The environment setup is the same as the official [HAIS](https://github.com/hustvl/HAIS) release
 
 - Setup the environment
