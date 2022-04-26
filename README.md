@@ -2,35 +2,32 @@
 
 # STPLS3D: A Large-Scale Synthetic and Real Aerial Photogrammetry 3D Point Cloud Dataset
 
-This is the official repository of the **STPLS3D** dataset. For technical details, please refer to:
-
-**STPLS3D: A Large-Scale Synthetic and Real Aerial Photogrammetry 3D Point Cloud Dataset** <br />
 [Meida Chen](https://scholar.google.com/citations?user=ii7ZwfQAAAAJ&hl=en), [Qingyong Hu](https://qingyonghu.github.io/), [Thomas Hugues](https://huguesthomas.github.io/), [Andrew Feng](https://scholar.google.com/citations?user=JKWxGfsAAAAJ&hl=en), [Yu Hou](https://www.yuhou.info/), [Kyle McCullough](https://ict.usc.edu/about-us/leadership/research-leadership/kyle-mccullough/), [Lucio Soibelman](https://viterbi.usc.edu/directory/faculty/Soibelman/Lucio). <br />
 **[[Paper](https://arxiv.org/abs/2203.09065)] [[Project page](https://www.stpls3d.com/)] [[Video](https://youtu.be/6wYWVo6Cmfs)]** <br />
 
-### (1) Our Focus
+## (1) Our Focus
 
 - Our project aims to provide a large database of annotated ground truth point clouds reconstructed using aerial photogrammetry.
 - Our database can be used for training and validating 3D semantic and instance segmentation algorithms.
 - We are developing a synthetic data generation pipeline to create synthetic training data that can augment or even replace real-world training data. 
 
-### (2) Dataset
+## (2) Dataset
 
-#### 2.1 Overview
+### 2.1 Overview
 
 we have built a large-scale photogrammetry 3D point cloud dataset, termed Semantic Terrain Points Labeling - Synthetic 3D (STPLS3D), which is composed of high-quality, rich-annotated point clouds from real-world and synthetic environments. 
 
 <p align="center"> <img src="imgs/STPLS3D.png" width="80%"> </p>
 
-#### 2.2 Data Collection
+### 2.2 Data Collection
 
 We first collect real-world aerial images using photogrammetry best practices with quadcopter drone flight at a low altitude with significant overlaps between adjacent photos. We then reconstructed point clouds with 1.27 km^2 landscape following the standard photogrammetry pipeline. Next, we follow the same UAV path and flying pattern to generate 62 synthetic point clouds with different architectural styles, vegetation types, and terrain shapes. The synthetic dataset covers about 16 km^2 of the city landscape, with up to 18 fine-grained semantic classes and 14 instance classes. 
 
-#### 2.3 Synthetic data generation workflow demo
+### 2.3 Synthetic data generation workflow demo
 
 <p align="center"> <a href="https://youtu.be/6wYWVo6Cmfs"><img src="imgs/STPLS3D_workflow.png" width="80%"></a> </p>
 
-#### 2.4 Semantic Annotations
+### 2.4 Semantic Annotations
 
 - 0-Ground: including grass, paved road, dirt, etc.
 - 1-Building: including commercial, residential, educational buildings.
@@ -54,35 +51,73 @@ We first collect real-world aerial images using photogrammetry best practices wi
 
 Note that not all datasets we are currently providing have all the semantic labels available, the ground points that don't have the material available (15, 18, 19) are labeled with 0.
 
-#### 2.5 Instance annotations
+### 2.5 Instance annotations
 
 The ground is labeled with -100. Window instance is currently per building but not per window but could be post-processed using connect component algorithm. Our experiments did not include the window instances. 
 
 Only synthetic datasets v2 and v3 have the instance labels.
 
-### (3) Benchmarks
+## (3) Benchmarks
 
-#### 3.1 Semantic segmentation:
+### 3.1 Semantic segmentation:
 
 <p align="center"> <img src="imgs/SemanticSegmentationEvaluationOnWMSC.JPG" width="80%"> </p>
 
-#### 3.2 Instance segmentation:
+### 3.2 Instance segmentation:
 
 <p align="center"> <img src="imgs/InstanceSegmentation.JPG" width="80%"> </p>
 
-### (4) Training and Evaluation
+## (4) Training and Evaluation
 Here we provide the training and evaluation script for both semantic and instance segmentation.
 
-#### 4.1 Semantic segmentation:
+### 4.1 Semantic segmentation:
 
-#### [KpConv](https://github.com/HuguesTHOMAS/KPConv-PyTorch)
-#### [RandLA-Net](https://github.com/QingyongHu/RandLA-Net)
-#### [SCF_Net](https://github.com/leofansq/SCF-Net)
+***[KpConv](https://github.com/meidachen/STPLS3D/tree/main/KPConv-PyTorch):*** The [environment setup](https://github.com/HuguesTHOMAS/KPConv-PyTorch/blob/master/INSTALL.md) is the same as the official [KpConv](https://github.com/HuguesTHOMAS/KPConv-PyTorch) release. We follow the same steps as shown [here](https://github.com/HuguesTHOMAS/KPConv-PyTorch/blob/master/doc/scene_segmentation_guide.md) to evaluate KpConv on our STPLS3D dataset.
 
-#### 4.2 Instance segmentation:
+- Preparing the dataset
 
-#### [HAIS](https://github.com/meidachen/STPLS3D/tree/main/HAIS): 
-The environment setup is the same as the official [HAIS](https://github.com/hustvl/HAIS) release
+Download the [data]() and unzip it. Change the variable `self.path` of `STPLS3DDataset` class ([here](https://github.com/meidachen/STPLS3D/blob/40186210639c0e3f3d49c6b087986fbbb0babaa9/KPConv-PyTorch/datasets/STPLS3D.py#L82)) to the place where STPLS3D is stored.
+
+```
+STPLS3D
+  ├── RealWorldData
+      ├── OCCC_points.ply
+         .
+         .
+      └── WMSC_points.ply
+  ├── Synthetic_v1
+      ├── OCCC_points.ply
+         .
+         .
+      └── WMSC_points.ply
+  ├── Synthetic_v2
+      ├── OCCC_points.ply
+         .
+         .
+      └── WMSC_points.ply
+  ├── Synthetic_v3
+      ├── OCCC_points.ply
+         .
+         .
+      └── WMSC_points.ply
+```
+
+- Start training:
+
+```
+python3 train_STPLS3D.py
+```
+
+- Evaluation:
+
+```
+python3 test_models.py
+```
+
+
+### 4.2 Instance segmentation:
+
+***[HAIS](https://github.com/meidachen/STPLS3D/tree/main/HAIS):*** The environment setup is the same as the official [HAIS](https://github.com/hustvl/HAIS) release
 
 - Setup the environment
 ```
@@ -139,7 +174,7 @@ CUDA_VISIBLE_DEVICES=1 python train.py --config config/hais_run_stpls3d.yaml
 CUDA_VISIBLE_DEVICES=1 python test.py --config config/hais_run_stpls3d.yaml --pretrain exp/Synthetic_v3_InstanceSegmentation/hais/hais_run_stpls3d/hais_run_stpls3d-000000500.pth
 ```
 
-### Citation
+## Citation
 If you find our work useful in your research, please consider citing:
 
 	@article{chen2022stpls3d,
@@ -149,6 +184,6 @@ If you find our work useful in your research, please consider citing:
 	  year={2022}
 	}
 
-### Updates
+## Updates
 * 03/25/2022: we are organizing a workshop at ECCV - 2nd Challenge on Urban Scene Understanding!
 * 11/01/2021: Initial release!
