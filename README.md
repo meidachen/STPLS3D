@@ -60,16 +60,26 @@ The ground is labeled with -100. Window instance is currently per building but n
 
 Only synthetic datasets v2 and v3 have the instance labels.
 
-### (3) Training and Evaluation
-Here we provide the training and evaluation script for both semantic and instance segmentation.
+### (3) Benchmarks
 
 #### 3.1 Semantic segmentation:
+
+<p align="center"> <img src="imgs/SemanticSegmentationWvaluationOnWMSC.JPG" width="80%"> </p>
+
+#### 3.2 Instance segmentation:
+
+<p align="center"> <img src="imgs/InstanceSegmentation.JPG" width="80%"> </p>
+
+### (4) Training and Evaluation
+Here we provide the training and evaluation script for both semantic and instance segmentation.
+
+#### 4.1 Semantic segmentation:
 
 #### [KpConv](https://github.com/HuguesTHOMAS/KPConv-PyTorch)
 #### [RandLA-Net](https://github.com/QingyongHu/RandLA-Net)
 #### [SCF_Net](https://github.com/leofansq/SCF-Net)
 
-#### 3.2 Instance segmentation:
+#### 4.2 Instance segmentation:
 
 #### [HAIS](https://github.com/meidachen/STPLS3D/tree/main/HAIS): 
 The environment setup is the same as the official [HAIS](https://github.com/hustvl/HAIS) release
