@@ -54,7 +54,7 @@ from utils.config import bcolors
 class STPLS3DDataset(PointCloudDataset):
     """Class to handle STPLS3D dataset."""
 
-    def __init__(self, config, dataFolder, validationDataName, set='training', use_potentials=True, load_data=True):
+    def __init__(self, config, set='training', use_potentials=True, load_data=True):
         """
         This dataset is small enough to be stored in-memory, so load all point clouds here
         """
@@ -79,7 +79,7 @@ class STPLS3DDataset(PointCloudDataset):
         self.ignored_labels = np.array([])
 
         # Dataset folder
-        self.path = dataFolder
+        self.path = 'E:\ECCV_workshop\SemanticSegmentation\STPLS3D'
 
         # Type of task conducted on this dataset
         self.dataset_task = 'cloud_segmentation'
@@ -104,20 +104,23 @@ class STPLS3DDataset(PointCloudDataset):
         ply_path = join(self.path, self.train_path)
 
         # Proportion of validation scenes
-        ### Bing data
         self.cloud_names = []
         self.all_splits = []
         self.validation_split = -1
 
-        self.cloud_names = glob.glob(os.path.join(self.path,'original_ply','*.ply'))
+        # validation file name
+        validationFileName = 'WMSC_points'
+
+        for root, dirs, files in os.walk(self.path):
+            for file in files:
+                if file.endswith(".ply"):
+                     self.cloud_names.append(os.path.join(root, file))
+
         for i,val in enumerate(self.cloud_names):
-            self.cloud_names[i] = os.path.basename(val).strip('.ply')
+            self.cloud_names[i] = os.path.basename(val).split('.')[0]
             self.all_splits.append(i)
-            if (self.cloud_names[i] == validationDataName):
+            if (self.cloud_names[i] == validationFileName):
                 self.validation_split = i
-        print (self.cloud_names)
-        print (self.all_splits)
-        print (self.validation_split)
 
         # Number of models used per epoch
         if self.set == 'training':
@@ -134,6 +137,8 @@ class STPLS3DDataset(PointCloudDataset):
         ################
         # Load ply files
         ################
+
+        self.prepare_STPLS3D_ply()
 
         # List of training files
         self.files = []
@@ -619,6 +624,56 @@ class STPLS3DDataset(PointCloudDataset):
         return input_list
 
 
+    def changeSemLabels(self,cloud):
+
+        cloud[:, 6:7] = np.where((cloud[:, 6:7] >= 2) &  (cloud[:, 6:7] <= 4), 2, cloud[:, 6:7])
+        cloud[:, 6:7] = np.where((cloud[:, 6:7] >= 5) &  (cloud[:, 6:7] <= 6), 3, cloud[:, 6:7])
+        cloud[:, 6:7] = np.where((cloud[:, 6:7] == 8), 3, cloud[:, 6:7])
+        cloud[:, 6:7] = np.where((cloud[:, 6:7] >= 11) &  (cloud[:, 6:7] <= 12), 4, cloud[:, 6:7])
+        cloud[:, 6:7] = np.where((cloud[:, 6:7] == 14), 5, cloud[:, 6:7])
+
+        cloud[:, 6:7] = np.where((cloud[:, 6:7] >= 7) &  (cloud[:, 6:7] <= 10), 1, cloud[:, 6:7])
+        cloud[:, 6:7] = np.where((cloud[:, 6:7] == 13), 1, cloud[:, 6:7])
+        cloud[:, 6:7] = np.where((cloud[:, 6:7] >= 15) &  (cloud[:, 6:7] <= 16), 0, cloud[:, 6:7])
+        cloud[:, 6:7] = np.where((cloud[:, 6:7] == 17), 1, cloud[:, 6:7])
+        cloud[:, 6:7] = np.where((cloud[:, 6:7] >17), 0, cloud[:, 6:7])
+
+        return cloud
+
+    def prepare_STPLS3D_ply(self):
+
+        print('\nPreparing ply files')
+        t0 = time.time()
+
+        ply_path = join(self.path, self.train_path)
+        if not exists(ply_path):
+            makedirs(ply_path)
+        count = 1
+        for root, dirs, files in os.walk(self.path):
+            for file in files:
+                if file.endswith(".ply"):
+                    # Pass if the cloud has already been computed
+                    cloud_file = join(ply_path, file)
+                    if exists(cloud_file):
+                        continue
+                    print('Cloud %d/%d - %s' % (count,len(self.cloud_names),file))
+                    count+=1
+
+                    cloud = read_ply(join(root, file))
+                    cloud = np.vstack((cloud['x'], cloud['y'], cloud['z'],cloud['red'], cloud['green'], cloud['blue'],cloud['class'])).T
+
+                    limitMin = np.amin(cloud[:, 0:3], axis=0)
+                    cloud[:, 0:3] -= limitMin
+                    cloud = self.changeSemLabels(cloud)
+
+                    xyz = cloud[:, :3].astype(np.float32)
+                    colors = cloud[:, 3:6].astype(np.uint8)
+                    labels = cloud[:, 6].astype(np.int32)
+
+                    write_ply(cloud_file, (xyz, colors, labels), ['x', 'y', 'z', 'red', 'green', 'blue', 'class'])
+        print('Done in {:.1f}s'.format(time.time() - t0))
+        return
+
     def load_subsampled_clouds(self):
 
         # Parameter
@@ -640,7 +695,7 @@ class STPLS3DDataset(PointCloudDataset):
 
             # Get cloud name
             cloud_name = self.cloud_names[i]
-
+            print (cloud_name)
             # Name of the input files
             KDTree_file = join(tree_path, '{:s}_KDTree.pkl'.format(cloud_name))
             sub_ply_file = join(tree_path, '{:s}.ply'.format(cloud_name))

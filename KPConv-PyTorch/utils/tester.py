@@ -11,7 +11,7 @@
 #
 # ----------------------------------------------------------------------------------------------------------------------
 #
-#      Hugues THOMAS - 11/06/2018
+#      Hugues THOMAS - 11/06/2018 modified by Meida Chen - 04/25/2022
 #
 
 
@@ -27,7 +27,7 @@ import torch
 import torch.nn as nn
 import numpy as np
 from os import makedirs, listdir
-from os.path import exists, join
+from os.path import exists, join, basename
 import time
 import json
 from sklearn.neighbors import KDTree
@@ -305,10 +305,7 @@ class ModelTester:
             #print([np.mean(pots) for pots in test_loader.dataset.potentials])
 
             # Save predicted cloud
-            ####
-            print (last_min + 1)
-            print (format(new_min, 'f'))
-            print (last_min + 1 < new_min)
+
             if last_min + 1 < new_min:
                 # Update last_min
                 last_min += 1
@@ -365,14 +362,18 @@ class ModelTester:
                     proj_probs = []
                     for i, file_path in enumerate(test_loader.dataset.files):
 
-                        print(i, file_path, test_loader.dataset.test_proj[i].shape, self.test_probs[i].shape)
-
-                        print(test_loader.dataset.test_proj[i].dtype, np.max(test_loader.dataset.test_proj[i]))
-                        print(test_loader.dataset.test_proj[i][:5])
+                        # print(i, file_path, test_loader.dataset.test_proj[i].shape, self.test_probs[i].shape)
+                        # print(test_loader.dataset.test_proj[i].dtype, np.max(test_loader.dataset.test_proj[i]))
+                        # print(test_loader.dataset.test_proj[i][:5])
 
                         # Reproject probs on the evaluations points
                         probs = self.test_probs[i][test_loader.dataset.test_proj[i], :]
                         proj_probs += [probs]
+
+                        # Insert false columns for ignored labels
+                        for l_ind, label_value in enumerate(test_loader.dataset.label_values):
+                            if label_value in test_loader.dataset.ignored_labels:
+                                proj_probs[i] = np.insert(proj_probs[i], l_ind, 0, axis=1)
 
                     t2 = time.time()
                     print('Done in {:.1f} s\n'.format(t2 - t1))
@@ -383,11 +384,6 @@ class ModelTester:
                         t1 = time.time()
                         Confs = []
                         for i, file_path in enumerate(test_loader.dataset.files):
-
-                            # Insert false columns for ignored labels
-                            for l_ind, label_value in enumerate(test_loader.dataset.label_values):
-                                if label_value in test_loader.dataset.ignored_labels:
-                                    proj_probs[i] = np.insert(proj_probs[i], l_ind, 0, axis=1)
 
                             # Get the predicted labels
                             preds = test_loader.dataset.label_values[np.argmax(proj_probs[i], axis=1)].astype(np.int32)
@@ -429,12 +425,9 @@ class ModelTester:
                         preds = test_loader.dataset.label_values[np.argmax(proj_probs[i], axis=1)].astype(np.int32)
 
                         # Save plys
-                        cloud_name = file_path.split('\\')[-1]
+                        cloud_name = basename(file_path)
                         test_name = join(test_path, 'predictions', cloud_name)
-                        print (gtLabels.shape)
                         gtLabels = np.squeeze(gtLabels)
-                        print (gtLabels.shape)
-                        print (points.shape)
                         write_ply(test_name,
                                   [points, preds,gtLabels],
                                   ['x', 'y', 'z', 'preds','class'])
@@ -780,28 +773,3 @@ class ModelTester:
                 break
 
         return
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

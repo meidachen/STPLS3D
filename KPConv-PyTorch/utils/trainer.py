@@ -29,7 +29,7 @@ import numpy as np
 import pickle
 import os
 from os import makedirs, remove
-from os.path import exists, join
+from os.path import exists, join, basename
 import time
 import sys
 
@@ -198,9 +198,9 @@ class ModelTrainer:
                     #torch.nn.utils.clip_grad_norm_(net.parameters(), config.grad_clip_norm)
                     torch.nn.utils.clip_grad_value_(net.parameters(), config.grad_clip_norm)
                 self.optimizer.step()
-                torch.cuda.synchronize(self.device)
-                
+
                 torch.cuda.empty_cache()
+                torch.cuda.synchronize(self.device)
 
                 t += [time.time()]
 
@@ -581,18 +581,20 @@ class ModelTrainer:
                     text_file.write(line)
 
             # Save potentials
-            pot_path = join(config.saving_path, 'potentials')
-            if not exists(pot_path):
-                makedirs(pot_path)
-            files = val_loader.dataset.files
-            for i, file_path in enumerate(files):
-                pot_points = np.array(val_loader.dataset.pot_trees[i].data, copy=False)
-                cloud_name = file_path.split('/')[-1]
-                pot_name = join(pot_path, cloud_name)
-                pots = val_loader.dataset.potentials[i].numpy().astype(np.float32)
-                write_ply(pot_name,
-                          [pot_points.astype(np.float32), pots],
-                          ['x', 'y', 'z', 'pots'])
+            if val_loader.dataset.use_potentials:
+                pot_path = join(config.saving_path, 'potentials')
+                if not exists(pot_path):
+                    makedirs(pot_path)
+                files = val_loader.dataset.files
+                for i, file_path in enumerate(files):
+                    pot_points = np.array(val_loader.dataset.pot_trees[i].data, copy=False)
+                    ### cloud_name = file_path.split('/')[-1]
+                    cloud_name = basename(file_path)
+                    pot_name = join(pot_path, cloud_name)
+                    pots = val_loader.dataset.potentials[i].numpy().astype(np.float32)
+                    write_ply(pot_name,
+                              [pot_points.astype(np.float32), pots],
+                              ['x', 'y', 'z', 'pots'])
 
         t6 = time.time()
 
@@ -626,7 +628,8 @@ class ModelTrainer:
                 preds = (sub_preds[val_loader.dataset.test_proj[i]]).astype(np.int32)
 
                 # Path of saved validation file
-                cloud_name = file_path.split('/')[-1]
+                ### cloud_name = file_path.split('/')[-1]
+                cloud_name = basename(file_path)
                 val_name = join(val_path, cloud_name)
 
                 # Save file

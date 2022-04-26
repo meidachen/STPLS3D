@@ -136,14 +136,14 @@ if __name__ == '__main__':
 
 
 
-    # filename = r'E:\ResidentialArea_GT.ply'
+    # filename = r'D:\GoogleDrive\STPLS3D\KPConv-PyTorch\test\Log_2022-04-22_22-24-04\predictions\WMSC_points.ply'
     # classificationReport, acc, IOU, mIOU = compute_accuracyOneFile_txt(filename)
 
 
 
 
     import glob
-    predDir = r'D:\syntheticVSreal_experiements\KPConv-PyTorch\results\Log_2021-09-27_05-24-43'
+    predDir = r'D:\GoogleDrive\STPLS3D\KPConv-PyTorch\test\Log_2022-04-22_22-24-04'
     filenames = glob.glob(predDir + r'\*\*.ply')
     resultDir = {'mIOUs':[],'IOUs':[],'accs':[],'filePaths':[]}
 

@@ -22,12 +22,14 @@ def changeSemLabels(cloud):
     cloud[:, 6:7] = np.where((cloud[:, 6:7] == 13), 1, cloud[:, 6:7])
     cloud[:, 6:7] = np.where((cloud[:, 6:7] >= 15) &  (cloud[:, 6:7] <= 16), 0, cloud[:, 6:7])
     cloud[:, 6:7] = np.where((cloud[:, 6:7] == 17), 1, cloud[:, 6:7])
+    cloud[:, 6:7] = np.where((cloud[:, 6:7] == 20), 1, cloud[:, 6:7])
     cloud[:, 6:7] = np.where((cloud[:, 6:7] >17), 0, cloud[:, 6:7])
 
 
     return cloud
 
 def prepareData(dataOriginal_fpath, save_path):
+
 
     if dataOriginal_fpath[-4:] == '.ply':
         cloud = read_ply(dataOriginal_fpath)
@@ -88,20 +90,20 @@ if __name__ == '__main__':
         print('    0-' + '-'*len(data_folder) + '-0')
         print()
 
-        dataOriginal_dir = 'E:/ECCV_workshop/SemanticSegmentation/STPLS3D_raw_ply/' + data_folder
-        dataTraining_dir = 'E:/ECCV_workshop/SemanticSegmentation/STPLS3D_prepared_03'
+        dataOriginal_dir = 'E:\ECCV_workshop\SemanticSegmentation/tmp/' + data_folder
+        dataTraining_dir = 'E:\ECCV_workshop\SemanticSegmentation/tmp'
         createFolder(dataTraining_dir)
         original_ply_dir = os.path.join(dataTraining_dir,'original_ply')
         createFolder(original_ply_dir)
         sub_pc_dir = os.path.join(dataTraining_dir, 'input_{:.3f}'.format(sub_grid_size))
         createFolder(sub_pc_dir)
         labelCount = [0,0,0,0,0,0]
-        dataOriginal_flist = glob.glob(dataOriginal_dir + '/*.ply')
+        dataOriginal_flist = glob.glob(dataOriginal_dir + '/*.txt')
 
         for dataOriginal_fpath in dataOriginal_flist:
             print()
             print(dataOriginal_fpath)
-            save_path = os.path.join(original_ply_dir,os.path.basename(dataOriginal_fpath))
+            save_path = os.path.join(original_ply_dir,os.path.basename(dataOriginal_fpath).replace('.txt','.ply'))
             prepareData(dataOriginal_fpath, save_path)
 
         print (labelCount)

@@ -11,7 +11,7 @@
 #
 # ----------------------------------------------------------------------------------------------------------------------
 #
-#      Hugues THOMAS - 06/03/2020
+#      Hugues THOMAS - 06/03/2020 modified by Meida Chen - 04/25/2022
 #
 
 
@@ -93,13 +93,13 @@ if __name__ == '__main__':
     #       > 'last_XXX': Automatically retrieve the last trained model on dataset XXX
     #       > '(old_)results/Log_YYYY-MM-DD_HH-MM-SS': Directly provide the path of a trained model
 
-    chosen_log = 'results/Log_2021-09-28_00-39-41'  # => ModelNet40
+    chosen_log = 'last_STPLS3D'
 
     # Choose the index of the checkpoint to load OR None if you want to load the current checkpoint
-    chkp_idx = None
+    chkp_idx = -1
 
     # Choose to test on validation or test split
-    on_val = False
+    on_val = True
 
     # Deal with 'last_XXXXXX' choices
     chosen_log = model_choice(chosen_log)
@@ -109,11 +109,8 @@ if __name__ == '__main__':
     ############################
 
     # Set which gpu is going to be used
-    GPU_ID = "0,1,2"
+    GPU_ID = '0,1,2,3'
     cudaDevice = '0'
-    dataFolder = "E:\STPLS3D\STPLS3D_prepared\KpConv_RealWorldData"
-    validationDataName = 'USC_GT'
-
 
     # Set GPU visible device
     os.environ['CUDA_VISIBLE_DEVICES'] = GPU_ID
@@ -147,7 +144,7 @@ if __name__ == '__main__':
     #config.augment_symmetries = False
     #config.batch_num = 3
     #config.in_radius = 4
-    config.validation_size = 1000
+    config.validation_size = 200
     config.input_threads = 10
 
     ##############
@@ -165,7 +162,7 @@ if __name__ == '__main__':
 
     # Initiate dataset
     if config.dataset == 'STPLS3D':
-        test_dataset = STPLS3DDataset(config, dataFolder,validationDataName,set='validation', use_potentials=True)
+        test_dataset = STPLS3DDataset(config, set='validation', use_potentials=True)
         test_sampler = STPLS3DSampler(test_dataset)
         collate_fn = STPLS3DCollate
     else:
@@ -195,7 +192,6 @@ if __name__ == '__main__':
         raise ValueError('Unsupported dataset_task for testing: ' + config.dataset_task)
 
     # Define a visualizer class
-
     tester = ModelTester(net, cudaDevice, chkp_path=chosen_chkp)
     print('Done in {:.1f}s\n'.format(time.time() - t1))
 

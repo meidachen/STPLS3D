@@ -11,7 +11,7 @@
 #
 # ----------------------------------------------------------------------------------------------------------------------
 #
-#      Hugues THOMAS - 06/03/2020 modified by Meida
+#      Hugues THOMAS - 06/03/2020 modified by Meida Chen - 04/25/2022
 #
 
 
@@ -100,7 +100,7 @@ class STPLS3DConfig(Config):
     num_kernel_points = 15
 
     # Size of the first subsampling grid in meter
-    first_subsampling_dl = 0.2
+    first_subsampling_dl = 0.5
 
     # Radius of convolution in "number grid cell". (2.5 is the standard value)
     conv_radius = 2.5
@@ -194,13 +194,8 @@ if __name__ == '__main__':
     ############################
 
     # Set which gpu is going to be used
-    GPU_ID = "1"
+    GPU_ID = '0,1,2,3'
     cudaDevice = '0'
-    dataFolder_val = "../../Data/STPLS3D_prepared/RealWorldData"
-    dataFolder_train = "../../Data/STPLS3D_prepared/RealWorldData"
-    validationDataName = 'WMSC_GT'
-
-    # ['ResidentialArea_GT', 'WMSC_GT', 'USC_GT', 'OCC_GT', 'GalenCenter_GT']
 
     # Set GPU visible device
     os.environ['CUDA_VISIBLE_DEVICES'] = GPU_ID
@@ -210,7 +205,6 @@ if __name__ == '__main__':
     ###############
 
     # Choose here if you want to start training from a previous snapshot (None for new training)
-    # previous_training_path = 'Log_2020-03-19_19-53-27'
     previous_training_path = ''
 
     # Choose index of checkpoint to start from. If None, uses the latest chkp
@@ -251,8 +245,8 @@ if __name__ == '__main__':
 
 
     # Initialize datasets
-    training_dataset = STPLS3DDataset(config, dataFolder_train, validationDataName,set='training', use_potentials=True)
-    test_dataset = STPLS3DDataset(config, dataFolder_val, validationDataName,set='validation', use_potentials=True)
+    training_dataset = STPLS3DDataset(config, set='training', use_potentials=True)
+    test_dataset = STPLS3DDataset(config, set='validation', use_potentials=True)
 
     # Initialize samplers
     training_sampler = STPLS3DSampler(training_dataset)
