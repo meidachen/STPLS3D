@@ -168,6 +168,8 @@ CUDA_VISIBLE_DEVICES=1 python train.py --config config/hais_run_stpls3d.yaml
 CUDA_VISIBLE_DEVICES=1 python test.py --config config/hais_run_stpls3d.yaml --pretrain exp/Synthetic_v3_InstanceSegmentation/hais/hais_run_stpls3d/hais_run_stpls3d-000000500.pth
 ```
 
+## (5) Instance segmentation challenge and evaluation server
+
 We are also organizing a instance segmentation challenge at [Here](https://codalab.lisn.upsaclay.fr/competitions/4646)! Please feel free to submit your results to the our evaluation server on our provided [unlabled datasets](https://webdisk.ict.usc.edu/index.php/s/oqO0sgiZfoa6Ofr).  
 
 ## Citation
