@@ -78,7 +78,7 @@ Here we provide the training and evaluation script for both semantic and instanc
 
 - Preparing the dataset
 
-Download the [data](https://webdisk.ict.usc.edu/index.php/s/uHCcdsExBnxqQiZ) and unzip it. Change the variable `self.path` of `STPLS3DDataset` class ([here](https://github.com/meidachen/STPLS3D/blob/40186210639c0e3f3d49c6b087986fbbb0babaa9/KPConv-PyTorch/datasets/STPLS3D.py#L82)) to the place where STPLS3D is stored.
+Download the [data](https://forms.gle/7e8enRwqGYkyM1398) and unzip it. Change the variable `self.path` of `STPLS3DDataset` class ([here](https://github.com/meidachen/STPLS3D/blob/40186210639c0e3f3d49c6b087986fbbb0babaa9/KPConv-PyTorch/datasets/STPLS3D.py#L82)) to the place where STPLS3D is stored.
 
 ```
 STPLS3D
@@ -139,7 +139,7 @@ python setup.py build_ext develop
 
 - Preparing the dataset
 
-Download the [data](https://webdisk.ict.usc.edu/index.php/s/8XkiYhBiDwf2rUP), unzip it and place it under STPLS3D/HAIS/dataset.
+Download the [data](https://forms.gle/wGEp4HBSaUWtgnMi9), unzip it and place it under STPLS3D/HAIS/dataset.
 ```
 HAIS
 ├── dataset
