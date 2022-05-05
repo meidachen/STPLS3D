@@ -172,7 +172,7 @@ CUDA_VISIBLE_DEVICES=1 python test.py --config config/hais_run_stpls3d.yaml --pr
 
 ## (5) Instance segmentation challenge and evaluation server
 
-We are also organizing a instance segmentation challenge on [CodaLab](https://codalab.lisn.upsaclay.fr/competitions/4646)! Please feel free to submit your results to our evaluation server with the [unlabled testing datasets](https://webdisk.ict.usc.edu/index.php/s/oqO0sgiZfoa6Ofr).  
+We are also organizing a instance segmentation challenge on CodaLab! Please feel free to submit your results to our [evaluation server](https://codalab.lisn.upsaclay.fr/competitions/4646) with the [unlabled testing datasets](https://webdisk.ict.usc.edu/index.php/s/oqO0sgiZfoa6Ofr).  
 
 ## Citation
 If you find our work useful in your research, please consider citing:
