@@ -185,5 +185,5 @@ If you find our work useful in your research, please consider citing:
 	}
 
 ## Updates
-* 03/25/2022: we are organizing the [Urban3D@ECCV2022 - 2nd International Workshop on Urban-Scale Point Clouds Understanding](https://urban3dchallenge.github.io/)!
+* 03/25/2022: we are organizing the [Urban3D@ECCV2022 - The 2nd Challenge on Large-Scale Point Clouds Analysis for Urban Scenes Understanding](https://urban3dchallenge.github.io/)!
 * 11/01/2021: Initial release!
