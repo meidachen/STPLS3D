@@ -198,3 +198,5 @@ If you find our work useful in your research, please consider citing:
 4. [SpinNet: Learning a General Surface Descriptor for 3D Point Cloud Registration](https://github.com/QingyongHu/SpinNet) ![GitHub stars](https://img.shields.io/github/stars/QingyongHu/SpinNet.svg?style=flat&label=Star)
 5. [SQN: Weakly-Supervised Semantic Segmentation of Large-Scale 3D Point Clouds](https://github.com/QingyongHu/SQN) ![GitHub stars](https://img.shields.io/github/stars/QingyongHu/SQN.svg?style=flat&label=Star)
 6. [SoTA-Point-Cloud: Deep Learning for 3D Point Clouds: A Survey](https://github.com/QingyongHu/SoTA-Point-Cloud) ![GitHub stars](https://img.shields.io/github/stars/QingyongHu/SoTA-Point-Cloud.svg?style=flat&label=Star)
+7. [Hierarchical Aggregation for 3D Instance Segmentation](https://github.com/hustvl/HAIS) ![GitHub stars](https://img.shields.io/github/stars/hustvl/HAIS?style=flat&label=Star)
+8. [KPConv: Flexible and Deformable Convolution for Point Clouds](https://github.com/HuguesTHOMAS/KPConv-PyTorch) ![GitHub stars](https://img.shields.io/github/stars/HuguesTHOMAS/KPConv-PyTorch?style=flat&label=Star)
