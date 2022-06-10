@@ -1,0 +1,6 @@
+ground
+building
+tree
+car
+light-pole
+fence
