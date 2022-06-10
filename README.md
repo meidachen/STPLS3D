@@ -114,6 +114,8 @@ python3 train_STPLS3D.py
 python3 test_models.py
 ```
 
+***[Point Transformer](https://github.com/meidachen/STPLS3D/tree/main/point-transformer) (Ubuntu):*** Please refer to [Point Transformer](https://github.com/meidachen/STPLS3D/tree/main/point-transformer) to test it on our STPLS3D dataset.
+
 
 ### 4.2 Instance segmentation:
 
