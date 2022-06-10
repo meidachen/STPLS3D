@@ -8,6 +8,10 @@
 **[[Paper](https://arxiv.org/abs/2203.09065)] [[Project page](https://www.stpls3d.com/)] [[Video](https://youtu.be/6wYWVo6Cmfs)] [[Urban3D workshop@ECCV2022](https://urban3dchallenge.github.io/)] [[Instance segmentation competition](https://codalab.lisn.upsaclay.fr/competitions/4646)]** <br />
 
 
+## Updates
+* 03/25/2022: we are organizing the [Urban3D@ECCV2022 - The 2nd Challenge on Large-Scale Point Clouds Analysis for Urban Scenes Understanding](https://urban3dchallenge.github.io/)!
+* 11/01/2021: Initial release!
+
 
 ## (1) Our Focus
 
@@ -187,10 +191,6 @@ If you find our work useful in your research, please consider citing:
 	  journal={arXiv preprint arXiv:2203.09065},
 	  year={2022}
 	}
-
-## Updates
-* 03/25/2022: we are organizing the [Urban3D@ECCV2022 - The 2nd Challenge on Large-Scale Point Clouds Analysis for Urban Scenes Understanding](https://urban3dchallenge.github.io/)!
-* 11/01/2021: Initial release!
 
 
 ## Related Repos
