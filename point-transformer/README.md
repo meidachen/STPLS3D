@@ -2,6 +2,10 @@
 This repository applies [Point Transformer](https://arxiv.org/abs/2012.09164) implemented by [POSTECH-CVLab](https://github.com/POSTECH-CVLab/point-transformer) to our STPLS3D for point cloud semantic segmentation. 
 
 ---
+## Update 06/15/2022
+
+- Upload the merge_block_vis.py to merge blocks and save the whole point clouds with predicted labels in .ply format. The field names of the ply file are \['x', 'y', 'z', 'red', 'green', 'blue', 'pred_label'\] 
+
 ## Dependencies
 - Ubuntu: 18.04 or higher
 - PyTorch: 1.9.0 
@@ -36,6 +40,13 @@ This repository applies [Point Transformer](https://arxiv.org/abs/2012.09164) im
 
       ```
       CUDA_VISIBLE_DEVICES=0 sh tool/test.sh stpls pointtransformer_repro
+      ```
+  - Post-processing
+
+    - Merge original input point cloud blocks with predictions for visualization.  
+
+      ```
+      python ./tool/merge_block_vis.py -d /path/to/inputs -p /path/to/predictions -s /path/to/save/ply
       ```
   ---
 ## Experimental Results
