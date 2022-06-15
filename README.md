@@ -8,6 +8,10 @@
 **[[Paper](https://arxiv.org/abs/2203.09065)] [[Project page](https://www.stpls3d.com/)] [[Video](https://youtu.be/6wYWVo6Cmfs)] [[Urban3D workshop@ECCV2022](https://urban3dchallenge.github.io/)] [[Instance segmentation competition](https://codalab.lisn.upsaclay.fr/competitions/4646)]** <br />
 
 
+## Updates
+* 03/25/2022: we are organizing the [Urban3D@ECCV2022 - The 2nd Challenge on Large-Scale Point Clouds Analysis for Urban Scenes Understanding](https://urban3dchallenge.github.io/)!
+* 11/01/2021: Initial release!
+
 
 ## (1) Our Focus
 
@@ -114,6 +118,8 @@ python3 train_STPLS3D.py
 python3 test_models.py
 ```
 
+***[Point Transformer](https://github.com/meidachen/STPLS3D/tree/main/point-transformer) (Ubuntu):*** Please refer to [Point Transformer](https://github.com/meidachen/STPLS3D/tree/main/point-transformer) to test it on our STPLS3D dataset.
+
 
 ### 4.2 Instance segmentation:
 
@@ -186,10 +192,6 @@ If you find our work useful in your research, please consider citing:
 	  year={2022}
 	}
 
-## Updates
-* 03/25/2022: we are organizing the [Urban3D@ECCV2022 - The 2nd Challenge on Large-Scale Point Clouds Analysis for Urban Scenes Understanding](https://urban3dchallenge.github.io/)!
-* 11/01/2021: Initial release!
-
 
 ## Related Repos
 1. [RandLA-Net: Efficient Semantic Segmentation of Large-Scale Point Clouds](https://github.com/QingyongHu/RandLA-Net) ![GitHub stars](https://img.shields.io/github/stars/QingyongHu/RandLA-Net.svg?style=flat&label=Star)
@@ -200,3 +202,4 @@ If you find our work useful in your research, please consider citing:
 6. [SoTA-Point-Cloud: Deep Learning for 3D Point Clouds: A Survey](https://github.com/QingyongHu/SoTA-Point-Cloud) ![GitHub stars](https://img.shields.io/github/stars/QingyongHu/SoTA-Point-Cloud.svg?style=flat&label=Star)
 7. [Hierarchical Aggregation for 3D Instance Segmentation](https://github.com/hustvl/HAIS) ![GitHub stars](https://img.shields.io/github/stars/hustvl/HAIS?style=flat&label=Star)
 8. [KPConv: Flexible and Deformable Convolution for Point Clouds](https://github.com/HuguesTHOMAS/KPConv-PyTorch) ![GitHub stars](https://img.shields.io/github/stars/HuguesTHOMAS/KPConv-PyTorch?style=flat&label=Star)
+9. [Point Transformer](https://github.com/POSTECH-CVLab/point-transformer) ![GitHub stars](https://img.shields.io/github/stars/POSTECH-CVLab/point-transformer?style=flat&label=Star)
