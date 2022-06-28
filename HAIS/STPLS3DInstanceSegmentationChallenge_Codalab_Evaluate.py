@@ -76,7 +76,7 @@ def evaluate_matches(matches):
                     gt_instances = matches[m]['gt'][label_name]
                     # filter groups in ground truth
                     gt_instances = [gt for gt in gt_instances if
-                                    gt['instance_id'] >= 1 and gt['vert_count'] >= min_region_size and gt['med_dist'] <= distance_thresh and gt['dist_conf'] >= distance_conf]
+                                    gt['instance_id'] >= 10000 and gt['vert_count'] >= min_region_size and gt['med_dist'] <= distance_thresh and gt['dist_conf'] >= distance_conf]
                     if gt_instances:
                         has_gt = True
                     if pred_instances:
@@ -132,7 +132,7 @@ def evaluate_matches(matches):
                             num_ignore = pred['void_intersection']
                             for gt in pred['matched_gt']:
                                 # group?
-                                if gt['instance_id'] < 1:
+                                if gt['instance_id'] < 10000:
                                     num_ignore += gt['intersection']
                                 # small ground truth instances
                                 if gt['vert_count'] < min_region_size or gt['med_dist'] > distance_thresh or gt['dist_conf'] < distance_conf:
@@ -244,7 +244,7 @@ def assign_instances_for_scan(scene_name, pred_info, gt_ids):
         pred2gt[label] = []
     num_pred_instances = 0
     # mask of void labels in the groundtruth
-    bool_void = np.logical_not(np.in1d(gt_ids//1, VALID_CLASS_IDS))
+    bool_void = np.logical_not(np.in1d(gt_ids//10000, VALID_CLASS_IDS))
     # go thru all prediction masks
     nMask = pred_info['label_id'].shape[0]
 
@@ -353,7 +353,7 @@ class Instance(object):
         self.label_id = int(self.get_label_id(instance_id))
         ### the number of point labels as instance_id
         self.vert_count = int(self.get_instance_verts(mesh_vert_instances, instance_id))
-    ### semantic and instance labels are stored in single number by semantic_label * 1000 + inst_id + 1
+    ### semantic and instance labels are stored in single number by semantic_label * 10000 + inst_id + 1
     ### label_id means semantic id
     def get_label_id(self, instance_id):
         return int(instance_id // 10000)
