@@ -9,6 +9,7 @@
 
 
 ## Updates
+* 06/28/2022: Special thanks to [Thang Vu](https://github.com/thangvubk) for implementing SoftGroup for STPLS3D - instance segmentation! Please refer to the official [SoftGroup](https://github.com/thangvubk/SoftGroup) for implementation details, and download their pretrained model.
 * 03/25/2022: we are organizing the [Urban3D@ECCV2022 - The 2nd Challenge on Large-Scale Point Clouds Analysis for Urban Scenes Understanding](https://urban3dchallenge.github.io/)!
 * 11/01/2021: Initial release!
 
@@ -21,21 +22,27 @@
 
 ## (2) Dataset
 
-### 2.1 Overview
+### 2.1 Download
+
+- To download the STPLS3D point clouds for SEMANTIC segmentation click [Here](https://forms.gle/XwVNYmu8p3n3qsgGA).
+- To download the STPLS3D point clouds for INSTANCE segmentation click [Here](https://forms.gle/9FA7ZCH7MGWfAcAo6).
+- To download the unlabled testing datasets for [STPLS3D instance segmentation competition](https://codalab.lisn.upsaclay.fr/competitions/4646) click [Here](https://webdisk.ict.usc.edu/index.php/s/oqO0sgiZfoa6Ofr).
+
+### 2.2 Overview
 
 we have built a large-scale photogrammetry 3D point cloud dataset, termed Semantic Terrain Points Labeling - Synthetic 3D (STPLS3D), which is composed of high-quality, rich-annotated point clouds from real-world and synthetic environments. 
 
 <p align="center"> <img src="imgs/STPLS3D.png" width="80%"> </p>
 
-### 2.2 Data Collection
+### 2.3 Data Collection
 
 We first collect real-world aerial images using photogrammetry best practices with quadcopter drone flight at a low altitude with significant overlaps between adjacent photos. We then reconstructed point clouds with 1.27 km^2 landscape following the standard photogrammetry pipeline. Next, we follow the same UAV path and flying pattern to generate 62 synthetic point clouds with different architectural styles, vegetation types, and terrain shapes. The synthetic dataset covers about 16 km^2 of the city landscape, with up to 18 fine-grained semantic classes and 14 instance classes. 
 
-### 2.3 Synthetic data generation workflow demo
+### 2.4 Synthetic data generation workflow demo
 
 <p align="center"> <a href="https://youtu.be/6wYWVo6Cmfs"><img src="imgs/STPLS3D_workflow.png" width="80%"></a> </p>
 
-### 2.4 Semantic Annotations
+### 2.5 Semantic Annotations
 
 - 0-Ground: including grass, paved road, dirt, etc.
 - 1-Building: including commercial, residential, educational buildings.
@@ -59,7 +66,7 @@ We first collect real-world aerial images using photogrammetry best practices wi
 
 Note that not all datasets we are currently providing have all the semantic labels available, the ground points that don't have the material available (15, 18, 19) are labeled with 0.
 
-### 2.5 Instance annotations
+### 2.6 Instance annotations
 
 The ground is labeled with -100. Window instance is currently per building but not per window but could be post-processed using connect component algorithm. Our experiments did not include the window instances. 
 
@@ -73,7 +80,7 @@ Only synthetic datasets v2 and v3 have the instance labels.
 
 ### 3.2 Instance segmentation:
 
-<p align="center"> <img src="imgs/InstanceSegmentation.JPG" width="80%"> </p>
+<p align="center"> <img src="imgs/InstanceSegmentation_06202022.PNG" width="80%"> </p>
 
 ## (4) Training and Evaluation
 Here we provide the training and evaluation script for both semantic and instance segmentation.
@@ -122,6 +129,8 @@ python3 test_models.py
 
 
 ### 4.2 Instance segmentation:
+
+***[SoftGroup](https://github.com/thangvubk/SoftGroup):*** Special thanks to [Thang Vu](https://github.com/thangvubk) for implementing SoftGroup for STPLS3D! Please refer to the official [SoftGroup](https://github.com/thangvubk/SoftGroup) for implementation details, and downloading their pretrained model.
 
 ***[HAIS](https://github.com/meidachen/STPLS3D/tree/main/HAIS) (Ubuntu):*** The environment setup is the same as the official [HAIS](https://github.com/hustvl/HAIS) release
 
@@ -194,12 +203,23 @@ If you find our work useful in your research, please consider citing:
 
 
 ## Related Repos
-1. [RandLA-Net: Efficient Semantic Segmentation of Large-Scale Point Clouds](https://github.com/QingyongHu/RandLA-Net) ![GitHub stars](https://img.shields.io/github/stars/QingyongHu/RandLA-Net.svg?style=flat&label=Star)
-2. [SensatUrban: Learning Semantics from Urban-Scale Photogrammetric Point Clouds](https://github.com/QingyongHu/SensatUrban) ![GitHub stars](https://img.shields.io/github/stars/QingyongHu/SensatUrban.svg?style=flat&label=Star)
-3. [3D-BoNet: Learning Object Bounding Boxes for 3D Instance Segmentation on Point Clouds](https://github.com/Yang7879/3D-BoNet) ![GitHub stars](https://img.shields.io/github/stars/Yang7879/3D-BoNet.svg?style=flat&label=Star)
-4. [SpinNet: Learning a General Surface Descriptor for 3D Point Cloud Registration](https://github.com/QingyongHu/SpinNet) ![GitHub stars](https://img.shields.io/github/stars/QingyongHu/SpinNet.svg?style=flat&label=Star)
-5. [SQN: Weakly-Supervised Semantic Segmentation of Large-Scale 3D Point Clouds](https://github.com/QingyongHu/SQN) ![GitHub stars](https://img.shields.io/github/stars/QingyongHu/SQN.svg?style=flat&label=Star)
-6. [SoTA-Point-Cloud: Deep Learning for 3D Point Clouds: A Survey](https://github.com/QingyongHu/SoTA-Point-Cloud) ![GitHub stars](https://img.shields.io/github/stars/QingyongHu/SoTA-Point-Cloud.svg?style=flat&label=Star)
-7. [Hierarchical Aggregation for 3D Instance Segmentation](https://github.com/hustvl/HAIS) ![GitHub stars](https://img.shields.io/github/stars/hustvl/HAIS?style=flat&label=Star)
-8. [KPConv: Flexible and Deformable Convolution for Point Clouds](https://github.com/HuguesTHOMAS/KPConv-PyTorch) ![GitHub stars](https://img.shields.io/github/stars/HuguesTHOMAS/KPConv-PyTorch?style=flat&label=Star)
-9. [Point Transformer](https://github.com/POSTECH-CVLab/point-transformer) ![GitHub stars](https://img.shields.io/github/stars/POSTECH-CVLab/point-transformer?style=flat&label=Star)
+
+#### Semantic segmentation:
+- [RandLA-Net: Efficient Semantic Segmentation of Large-Scale Point Clouds](https://github.com/QingyongHu/RandLA-Net) ![GitHub stars](https://img.shields.io/github/stars/QingyongHu/RandLA-Net.svg?style=flat&label=Star)
+- [KPConv: Flexible and Deformable Convolution for Point Clouds](https://github.com/HuguesTHOMAS/KPConv-PyTorch) ![GitHub stars](https://img.shields.io/github/stars/HuguesTHOMAS/KPConv-PyTorch?style=flat&label=Star)
+- [SCF-Net: Learning Spatial Contextual Features for Large-Scale Point Cloud Segmentation](https://github.com/leofansq/SCF-Net) ![GitHub stars](https://img.shields.io/github/stars/leofansq/SCF-Net?style=flat&label=Star)
+- [Point Transformer](https://github.com/POSTECH-CVLab/point-transformer) ![GitHub stars](https://img.shields.io/github/stars/POSTECH-CVLab/point-transformer?style=flat&label=Star)
+
+#### Instance segmentation:
+- [SoftGroup for 3D Instance Segmentation on Point Clouds](https://github.com/thangvubk/SoftGroup) ![GitHub stars](https://img.shields.io/github/stars/thangvubk/SoftGroup?style=flat&label=Star)
+- [Hierarchical Aggregation for 3D Instance Segmentation](https://github.com/hustvl/HAIS) ![GitHub stars](https://img.shields.io/github/stars/hustvl/HAIS?style=flat&label=Star)
+- [PointGroup: Dual-Set Point Grouping for 3D Instance Segmentation](https://github.com/dvlab-research/PointGroup) ![GitHub stars](https://img.shields.io/github/stars/dvlab-research/PointGroup?style=flat&label=Star)
+
+#### Data set:
+- [SensatUrban: Learning Semantics from Urban-Scale Photogrammetric Point Clouds](https://github.com/QingyongHu/SensatUrban) ![GitHub stars](https://img.shields.io/github/stars/QingyongHu/SensatUrban.svg?style=flat&label=Star)
+
+#### Others:
+- [3D-BoNet: Learning Object Bounding Boxes for 3D Instance Segmentation on Point Clouds](https://github.com/Yang7879/3D-BoNet) ![GitHub stars](https://img.shields.io/github/stars/Yang7879/3D-BoNet.svg?style=flat&label=Star)
+- [SpinNet: Learning a General Surface Descriptor for 3D Point Cloud Registration](https://github.com/QingyongHu/SpinNet) ![GitHub stars](https://img.shields.io/github/stars/QingyongHu/SpinNet.svg?style=flat&label=Star)
+- [SQN: Weakly-Supervised Semantic Segmentation of Large-Scale 3D Point Clouds](https://github.com/QingyongHu/SQN) ![GitHub stars](https://img.shields.io/github/stars/QingyongHu/SQN.svg?style=flat&label=Star)
+- [SoTA-Point-Cloud: Deep Learning for 3D Point Clouds: A Survey](https://github.com/QingyongHu/SoTA-Point-Cloud) ![GitHub stars](https://img.shields.io/github/stars/QingyongHu/SoTA-Point-Cloud.svg?style=flat&label=Star)
