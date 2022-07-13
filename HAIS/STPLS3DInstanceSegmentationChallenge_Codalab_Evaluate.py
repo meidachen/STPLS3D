@@ -510,7 +510,7 @@ if __name__ == "__main__":
             preDataAll = np.squeeze(preDataAll, axis=1)
 
             indices = splitPointCloud(xyz)
-            for i,indx in enumerate(indices):
+            for j,indx in enumerate(indices):
                 # print ("%d / %d"%(i+1,len(indices)))
                 gt_ids = gtDataAll[indx]
                 preData = preDataAll[indx]
@@ -533,14 +533,14 @@ if __name__ == "__main__":
                 pred_info['conf'] = preConf
                 pred_info['label_id'] = preSem
                 pred_info['mask'] = preIns
-                gt2pred, pred2gt = assign_instances_for_scan(i, pred_info, gt_ids)
+                gt2pred, pred2gt = assign_instances_for_scan(f'{basename}_{j}', pred_info, gt_ids)
 
-                matches[i] = {}
-                matches[i]['gt'] = gt2pred
-                matches[i]['pred'] = pred2gt
+                matches[f'{basename}_{j}'] = {}
+                matches[f'{basename}_{j}']['gt'] = gt2pred
+                matches[f'{basename}_{j}']['pred'] = pred2gt
 
-                matches[i]['seg_gt'] = gtSem
-                matches[i]['seg_pred'] = preSem
+                matches[f'{basename}_{j}']['seg_gt'] = gtSem
+                matches[f'{basename}_{j}']['seg_pred'] = preSem
 
         except Exception as inst:
             print("======= ERROR evaluating for" + basename.capitalize() + " =======")
