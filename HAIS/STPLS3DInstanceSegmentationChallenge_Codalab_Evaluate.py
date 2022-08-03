@@ -1,6 +1,5 @@
 import logging
 import os,json
-import pandas as pd
 import numpy as np
 from sys import argv
 
@@ -76,7 +75,7 @@ def evaluate_matches(matches):
                     gt_instances = matches[m]['gt'][label_name]
                     # filter groups in ground truth
                     gt_instances = [gt for gt in gt_instances if
-                                    gt['instance_id'] >= 10000 and gt['vert_count'] >= min_region_size and gt['med_dist'] <= distance_thresh and gt['dist_conf'] >= distance_conf]
+                                    gt['instance_id'] >= 1000 and gt['vert_count'] >= min_region_size and gt['med_dist'] <= distance_thresh and gt['dist_conf'] >= distance_conf]
                     if gt_instances:
                         has_gt = True
                     if pred_instances:
@@ -132,7 +131,7 @@ def evaluate_matches(matches):
                             num_ignore = pred['void_intersection']
                             for gt in pred['matched_gt']:
                                 # group?
-                                if gt['instance_id'] < 10000:
+                                if gt['instance_id'] < 1000:
                                     num_ignore += gt['intersection']
                                 # small ground truth instances
                                 if gt['vert_count'] < min_region_size or gt['med_dist'] > distance_thresh or gt['dist_conf'] < distance_conf:
@@ -244,7 +243,7 @@ def assign_instances_for_scan(scene_name, pred_info, gt_ids):
         pred2gt[label] = []
     num_pred_instances = 0
     # mask of void labels in the groundtruth
-    bool_void = np.logical_not(np.in1d(gt_ids//10000, VALID_CLASS_IDS))
+    bool_void = np.logical_not(np.in1d(gt_ids//1000, VALID_CLASS_IDS))
     # go thru all prediction masks
     nMask = pred_info['label_id'].shape[0]
 
@@ -353,10 +352,10 @@ class Instance(object):
         self.label_id = int(self.get_label_id(instance_id))
         ### the number of point labels as instance_id
         self.vert_count = int(self.get_instance_verts(mesh_vert_instances, instance_id))
-    ### semantic and instance labels are stored in single number by semantic_label * 10000 + inst_id + 1
+    ### semantic and instance labels are stored in single number by semantic_label * 1000 + inst_id + 1
     ### label_id means semantic id
     def get_label_id(self, instance_id):
-        return int(instance_id // 10000)
+        return int(instance_id // 1000)
 
     def get_instance_verts(self, mesh_vert_instances, instance_id):
         return (mesh_vert_instances == instance_id).sum()
@@ -404,71 +403,13 @@ def get_instances(ids, class_ids, class_labels, id2label):
             instances[id2label[inst.label_id]].append(inst.to_dict())
     return instances
 
-
-def splitPointCloud(cloud, size=50.0, stride=50.0):
-    cloud = cloud - cloud.min(0)
-    limitMax = np.amax(cloud, axis=0)
-    width = int(np.ceil((limitMax[0] - size) / stride)) + 1
-    depth = int(np.ceil((limitMax[1] - size) / stride)) + 1
-    cells = [(x * stride, y * stride) for x in range(width) for y in range(depth)]
-    indx = []
-    for (x, y) in cells:
-        xcond = (cloud[:, 0] <= x + size) & (cloud[:, 0] >= x)
-        ycond = (cloud[:, 1] <= y + size) & (cloud[:, 1] >= y)
-        curIndx = xcond & ycond
-        indx.append(curIndx)
-    return indx
-
-
-def prepareGT(inFile,outFile,gt=True):
-    data = pd.read_csv(inFile, header = None).values
-    sem_labels = data[:, 6]
-    instance_labels = data[:, 7]
-    sem_labels = sem_labels.astype(np.int32)
-    instance_labels = instance_labels.astype(np.float32)
-
-    # map instance from 1.
-    # -100 for ignored labels, xx00y: x for semantic_label, y for inst_id (1~instance_num)
-    # use 500000 to be safe, who knows what number was assigned to a instance...
-    # [1:] because there are -100, -100 is still -100.
-    if gt:
-        uniqueInstances = (np.unique(instance_labels))[1:].astype(np.int32)
-    else:
-        uniqueInstances = (np.unique(instance_labels)).astype(np.int32)
-    remapper_instance = np.ones(500000) * (-101)
-    for i, j in enumerate(uniqueInstances):
-        remapper_instance[j] = i
-    instance_labels = remapper_instance[instance_labels.astype(np.int32)]
-
-    instance_labels = (instance_labels+1) + (sem_labels*10000)
-
-    if gt:
-        outData = np.concatenate((data[:,:3], np.expand_dims(instance_labels,axis=1)), axis=1)
-        np.savetxt(outFile, outData, fmt='%f,%f,%f,%d', delimiter=',')
-    else:
-        np.savetxt(outFile, instance_labels, fmt='%d')
-
-
 if __name__ == "__main__":
-
-
-    ### prepare gt data and result for debug
-    # rootRef = r'E:\ECCV_workshop\test\input\ref'
-    # inFileGT = r'E:\ECCV_workshop\test\26_points_GTv3.txt'
-    # outFile = os.path.join(rootRef,'26_points_GTv3.solution')
-    # prepareGT(inFileGT,outFile,gt=True)
-    #
-    # rootRes = r'E:\ECCV_workshop\test\input\res'
-    # outFile = os.path.join(rootRes,'26_points_GTv3.predict')
-    # inFileRes = r'E:\ECCV_workshop\test\26_points_GTv3_pre.txt'
-    # prepareGT(inFileRes,outFile,gt=False)
-
 
     ### prepare for evaluation
 
     # Default I/O directories:
-    default_input_dir = r'E:\ECCV_workshop\test\input'
-    default_output_dir = r'E:\ECCV_workshop\test\output'
+    default_input_dir = r'E:\ECCV_workshop\evaluation_test\input'
+    default_output_dir = r'E:\ECCV_workshop\evaluation_test\output'
 
     #### INPUT/OUTPUT: Get input and output directory names
     if len(argv) == 1:  # Use the default input and output directories if no arguments are provided
@@ -481,72 +422,56 @@ if __name__ == "__main__":
         os.makedirs(output_dir)
 
     score_file = open(os.path.join(output_dir, 'scores.txt'), 'w')
-    # html_file = open(os.path.join(output_dir, 'scores.html'), 'w')
 
     import glob
-    # Get all the solution files from the solution directory
-    solution_names = sorted(glob.glob(os.path.join(input_dir, 'ref', '*.solution')))
-    matches = {}
-    for i, solution_file in enumerate(solution_names):
-        ### gt contains x,y,z,label.
-        ### pre only has label and same order as gt
-        # Extract the dataset name from the file name
-        basename = os.path.basename(solution_file).split('.')[0]
+    data_path = os.path.join(input_dir, 'ref')
+    results_path = os.path.join(input_dir, 'res')
+    instance_paths = sorted(glob.glob(os.path.join(results_path, '*.txt')))
 
+    matches = {}
+    for instance_path in instance_paths:
+        img_id = os.path.basename(instance_path)[:-4]
 
         try:
-            preFilePath = os.path.join(input_dir, 'res', basename + '.predict')
-            if not os.path.exists(preFilePath): raise ValueError("Missing prediction file: %s.predict" %(basename))
-            gtFilePath = solution_file
-            data = pd.read_csv(gtFilePath, header = None).values
-            preDataAll = pd.read_csv(preFilePath, header = None).values
-            if (len(data) != len(preDataAll)): raise ValueError(
-                "Bad prediction shape. # prediction: {}\n# Solution:{}".format(len(preDataAll), len(data)))
+            gt = os.path.join(data_path, img_id + '.npy')
+            assert os.path.isfile(gt)
+            data = np.load(gt)
+            coords, rgb, semantic_label, instance_label = data[:,:3], data[:,3:6], np.squeeze(data[:,6]), np.squeeze(data[:,7])
+            gt_ids = semantic_label*1000 + instance_label
 
-            xyz = data[:,:3]
-            gtDataAll = data[:,3]
-            gtSem = (gtDataAll // 10000).astype(int)
-            gtIns = gtDataAll.astype(int)
-            preDataAll = np.squeeze(preDataAll, axis=1)
+            pred_infos = open(instance_path, 'r').readlines()
+            pred_infos = [x.rstrip().split() for x in pred_infos]
+            mask_path, labels, scores = list(zip(*pred_infos))
 
-            indices = splitPointCloud(xyz)
-            for j,indx in enumerate(indices):
-                # print ("%d / %d"%(i+1,len(indices)))
-                gt_ids = gtDataAll[indx]
-                preData = preDataAll[indx]
+            preSem = []
+            preIns = []
+            preConf = []
+            for mask_path, label, score in pred_infos:
+                mask_full_path = os.path.join(results_path, mask_path)
+                mask = np.array(open(mask_full_path).read().splitlines(), dtype=int)
+                preIns.append(mask)
+                preSem.append(label)
+                preConf.append(score)
+            preConf = np.array(preConf, dtype=float)
+            preSem = np.array(preSem, dtype=int)
+            preIns = np.array(preIns)
 
-                preSem = []
-                preIns = []
-                preConf = []
-                uniqueInses = np.unique(preData)
-                for uniqueIns in uniqueInses:
-                    preSem.append((uniqueIns // 10000).astype(int))
-                    curIns = np.where(preData == uniqueIns, 1, 0)
-                    preIns.append(curIns.astype(int))
+            pred_info = {}
+            pred_info['conf'] = preConf
+            pred_info['label_id'] = preSem
+            pred_info['mask'] = preIns
 
-                # conf value doesn't really matter
-                preConf = np.full((len(preSem),1),1.0)
-                preSem = np.array(preSem)
-                preIns = np.array(preIns)
+            gt2pred, pred2gt = assign_instances_for_scan(str(img_id), pred_info, gt_ids)
 
-                pred_info = {}
-                pred_info['conf'] = preConf
-                pred_info['label_id'] = preSem
-                pred_info['mask'] = preIns
-                gt2pred, pred2gt = assign_instances_for_scan(f'{basename}_{j}', pred_info, gt_ids)
+            matches[str(img_id)] = {}
+            matches[str(img_id)]['gt'] = gt2pred
+            matches[str(img_id)]['pred'] = pred2gt
 
-                matches[f'{basename}_{j}'] = {}
-                matches[f'{basename}_{j}']['gt'] = gt2pred
-                matches[f'{basename}_{j}']['pred'] = pred2gt
-
-                matches[f'{basename}_{j}']['seg_gt'] = gtSem
-                matches[f'{basename}_{j}']['seg_pred'] = preSem
+            matches[str(img_id)]['seg_gt'] = semantic_label
+            matches[str(img_id)]['seg_pred'] = preSem
 
         except Exception as inst:
-            print("======= ERROR evaluating for" + basename.capitalize() + " =======")
-            # html_file.write(
-            #     "======= Set %d" % set_num + " (" + basename.capitalize() + "): score(" + score_name + ")=ERROR =======\n")
-            # print(inst)
+            print("======= ERROR evaluating for" + img_id.capitalize() + " =======")
 
     ap_scores = evaluate_matches(matches)
     avgs = compute_averages(ap_scores)
