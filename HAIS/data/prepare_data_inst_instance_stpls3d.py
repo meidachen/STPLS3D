@@ -125,6 +125,9 @@ def preparePthFiles(files, split, outPutFolder, AugTimes=0):
                             counter += 1
                         else:
                             torch.save((coords, colors, sem_labels, instance_labels), outFilePath)
+                            # outFilePthPath = outFilePath[:-4]+'.npy'
+                            # data = np.concatenate((coords, colors, np.expand_dims(sem_labels, axis=1), np.expand_dims(instance_labels, axis=1)), axis=1)
+                            # np.save(outFilePthPath,data)
                             ### save text file for each pth file
                             # outFilePath = os.path.join(outPutFolder,name+str(blockNum)+'.txt')
                             # outFile = open(outFilePath,'w')
@@ -134,9 +137,12 @@ def preparePthFiles(files, split, outPutFolder, AugTimes=0):
                             #                                                 sem_labels[i],instance_labels[i]))
                     else:
                         torch.save((coords, colors), outFilePath)
-                        # # save text file for each pth file
-                        # outFilePath = os.path.join(outPutFolder,name+str(blockNum)+'.txt')
-                        # outFile = open(outFilePath,'w')
+                        # outFilePthPath = outFilePath[:-4]+'.npy'
+                        # data = np.concatenate((coords, colors), axis=1)
+                        # np.save(outFilePthPath,data)
+                        # save text file for each pth file
+                        # outFileTxtPath = outFilePath[:-4]+'.txt'
+                        # outFile = open(outFileTxtPath,'w')
                         # for i in range(len(coords)):
                         #     outFile.write("%f,%f,%f,%f,%f,%f\n" %(coords[i][0],coords[i][1],coords[i][2],
                         #                                                 colors[i][0],colors[i][1],colors[i][2]))
@@ -191,3 +197,11 @@ if __name__ == '__main__':
     val_gtFolder = os.path.join(data_folder,'val_gt')
     os.makedirs(val_gtFolder,exist_ok=True)
     prepareInstGt(valOutDir, val_gtFolder, semantic_label_idxs)
+
+    testSplit = [26,27,28]
+    split = 'test'
+    testFiles = getFiles(filesOri, testSplit)
+    testOutDir = os.path.join(data_folder,split)
+    os.makedirs(testOutDir,exist_ok=True)
+    if len(testFiles)>0:
+        preparePthFiles(testFiles, split, testOutDir)
