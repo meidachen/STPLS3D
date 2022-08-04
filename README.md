@@ -174,6 +174,9 @@ HAIS
 cd STPLS3D/HAIS/data
 python prepare_data_inst_instance_stpls3d.py
 ```
+By default, scene 5, 10, 15, 20, 25 are used as the validation sets. This can be changed at 
+https://github.com/meidachen/STPLS3D/blob/6eec7abe760a45dc970714f62f6b0e555a2f44b7/HAIS/data/prepare_data_inst_instance_stpls3d.py#L179
+https://github.com/meidachen/STPLS3D/blob/6eec7abe760a45dc970714f62f6b0e555a2f44b7/HAIS/data/prepare_data_inst_instance_stpls3d.py#L186
 
 (optional) In case you are changing training data (i.e., not using data agumentation, using different ways for data agumentation, etc.), please run prepare_data_statistic_stpls3d.py to get the class_weight, class_radius_mean, and class_numpoint_mean_dict. Change them in hais_run_stpls3d.yaml, hierarchical_aggregation.cpp, and hierarchical_aggregation.cu accordingly. Make sure you rebuild the hais_ops.
 
@@ -186,6 +189,34 @@ CUDA_VISIBLE_DEVICES=1 python train.py --config config/hais_run_stpls3d.yaml
 ```
 CUDA_VISIBLE_DEVICES=1 python test.py --config config/hais_run_stpls3d.yaml --pretrain exp/Synthetic_v3_InstanceSegmentation/hais/hais_run_stpls3d/hais_run_stpls3d-000000500.pth
 ```
+
+- Run test on unlabeled data and submit to our evaluation server:
+The unlabeled data can be downloaded [here](https://webdisk.ict.usc.edu/index.php/s/nH3b9GprmV9d3Kr).Unzip it and place the 3 .txt files under STPLS3D/HAIS/dataset/Synthetic_v3_InstanceSegmentation.
+```
+HAIS
+├── dataset
+   └── Synthetic_v3_InstanceSegmentation
+       ├── 26_points_GTv3.txt
+       ├── 27_points_GTv3.txt
+       └── 28_points_GTv3.txt
+```
+Run the preparation script again
+```
+cd STPLS3D/HAIS/data
+python prepare_data_inst_instance_stpls3d.py
+```
+Change the following line to split: test
+https://github.com/meidachen/STPLS3D/blob/6eec7abe760a45dc970714f62f6b0e555a2f44b7/HAIS/config/hais_run_stpls3d.yaml#L71
+And set the save_instance to True
+https://github.com/meidachen/STPLS3D/blob/6eec7abe760a45dc970714f62f6b0e555a2f44b7/HAIS/config/hais_run_stpls3d.yaml#L84
+Run evaluation again
+```
+CUDA_VISIBLE_DEVICES=1 python test.py --config config/hais_run_stpls3d.yaml --pretrain exp/Synthetic_v3_InstanceSegmentation/hais/hais_run_stpls3d/hais_run_stpls3d-000000500.pth
+```
+Once completed, you may find the results under 
+exp/Synthetic_v3_InstanceSegmentation/hais/hais_run_stpls3d/result/test
+
+You only need to keep the 300 txt files along with the predicted_masks folder, and zip it to submit on our evaluation server. An example of the submission zip can be find [here](https://webdisk.ict.usc.edu/index.php/s/sgTeG7YLmwGD5kR).
 
 ## (5) Instance segmentation challenge and evaluation server
 
