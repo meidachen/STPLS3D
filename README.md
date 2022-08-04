@@ -191,6 +191,7 @@ CUDA_VISIBLE_DEVICES=1 python test.py --config config/hais_run_stpls3d.yaml --pr
 ```
 
 - Testing on unlabeled data and submit to our [evaluation server](https://codalab.lisn.upsaclay.fr/competitions/4646):
+
 The unlabeled data can be downloaded [here](https://webdisk.ict.usc.edu/index.php/s/oqO0sgiZfoa6Ofr). Unzip it and place the three .txt files under STPLS3D/HAIS/dataset/Synthetic_v3_InstanceSegmentation.
 ```
 HAIS
@@ -200,19 +201,24 @@ HAIS
        ├── 27_points_GTv3.txt
        └── 28_points_GTv3.txt
 ```
+
 Run the preparation script again
 ```
 cd STPLS3D/HAIS/data
 python prepare_data_inst_instance_stpls3d.py
 ```
+
 Set split to test
 https://github.com/meidachen/STPLS3D/blob/6eec7abe760a45dc970714f62f6b0e555a2f44b7/HAIS/config/hais_run_stpls3d.yaml#L71
+
 Set save_instance to True
 https://github.com/meidachen/STPLS3D/blob/6eec7abe760a45dc970714f62f6b0e555a2f44b7/HAIS/config/hais_run_stpls3d.yaml#L84
+
 Run evaluation again
 ```
 CUDA_VISIBLE_DEVICES=1 python test.py --config config/hais_run_stpls3d.yaml --pretrain exp/Synthetic_v3_InstanceSegmentation/hais/hais_run_stpls3d/hais_run_stpls3d-000000500.pth
 ```
+
 Once completed, you may find the results under 
 exp/Synthetic_v3_InstanceSegmentation/hais/hais_run_stpls3d/result/test
 
@@ -220,7 +226,7 @@ You only need to keep the 300 txt files and the predicted_masks folder, and zip 
 
 ## (5) Instance segmentation challenge and evaluation server
 
-We are organizing a instance segmentation challenge on CodaLab! Please feel free to submit your results to our [evaluation server](https://codalab.lisn.upsaclay.fr/competitions/4646).  
+we are organizing the [Urban3D@ECCV2022 - The 2nd Challenge on Large-Scale Point Clouds Analysis for Urban Scenes Understanding](https://urban3dchallenge.github.io/). The instance segmentation challenge is on CodaLab! Please feel free to submit your results to our [evaluation server](https://codalab.lisn.upsaclay.fr/competitions/4646).  
 
 ## Citation
 If you find our work useful in your research, please consider citing:
