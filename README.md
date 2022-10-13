@@ -9,6 +9,7 @@
 
 
 ## Updates
+* 10/13/2022: Our [Paper](https://arxiv.org/abs/2203.09065) is accepted as oral presentation at [BMVC2022](https://bmvc2022.org/)!
 * 06/28/2022: Special thanks to [Thang Vu](https://github.com/thangvubk) for implementing SoftGroup for STPLS3D - instance segmentation! Please refer to the official [SoftGroup](https://github.com/thangvubk/SoftGroup) for implementation details, and download their pretrained model.
 * 03/25/2022: we are organizing the [Urban3D@ECCV2022 - The 2nd Challenge on Large-Scale Point Clouds Analysis for Urban Scenes Understanding](https://urban3dchallenge.github.io/)!
 * 11/01/2021: Initial release!
