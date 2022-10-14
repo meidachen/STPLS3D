@@ -9,6 +9,7 @@
 
 
 ## Updates
+* 10/14/2022: Special thanks to [Jonas Schult](https://github.com/JonasSchult) for implementing Mask3D for STPLS3D - instance segmentation! Please refer to the official [Mask3D](https://github.com/JonasSchult/Mask3D) for implementation details, and download their pretrained model.
 * 10/13/2022: Our [Paper](https://arxiv.org/abs/2203.09065) is accepted as oral presentation at [BMVC2022](https://bmvc2022.org/)!
 * 06/28/2022: Special thanks to [Thang Vu](https://github.com/thangvubk) for implementing SoftGroup for STPLS3D - instance segmentation! Please refer to the official [SoftGroup](https://github.com/thangvubk/SoftGroup) for implementation details, and download their pretrained model.
 * 03/25/2022: we are organizing the [Urban3D@ECCV2022 - The 2nd Challenge on Large-Scale Point Clouds Analysis for Urban Scenes Understanding](https://urban3dchallenge.github.io/)!
@@ -131,6 +132,8 @@ python3 test_models.py
 
 ### 4.2 Instance segmentation:
 
+***[Mask3D](https://github.com/JonasSchult/Mask3D):*** Special thanks to [Jonas Schult](https://github.com/JonasSchult) for implementing Mask3D for STPLS3D! Please refer to the official [Mask3D](https://github.com/JonasSchult/Mask3D) for implementation details, and download their pretrained model.
+
 ***[SoftGroup](https://github.com/thangvubk/SoftGroup):*** Special thanks to [Thang Vu](https://github.com/thangvubk) for implementing SoftGroup for STPLS3D! Please refer to the official [SoftGroup](https://github.com/thangvubk/SoftGroup) for implementation details, and downloading their pretrained model.
 
 ***[HAIS](https://github.com/meidachen/STPLS3D/tree/main/HAIS) (Ubuntu):*** The environment setup is the same as the official [HAIS](https://github.com/hustvl/HAIS) release
@@ -249,6 +252,7 @@ If you find our work useful in your research, please consider citing:
 - [Point Transformer](https://github.com/POSTECH-CVLab/point-transformer) ![GitHub stars](https://img.shields.io/github/stars/POSTECH-CVLab/point-transformer?style=flat&label=Star)
 
 #### Instance segmentation:
+- [Mask3D for 3D Semantic Instance Segmentation](https://github.com/JonasSchult/Mask3D) ![GitHub stars](https://img.shields.io/github/stars/JonasSchult/Mask3D?style=flat&label=Star)
 - [SoftGroup for 3D Instance Segmentation on Point Clouds](https://github.com/thangvubk/SoftGroup) ![GitHub stars](https://img.shields.io/github/stars/thangvubk/SoftGroup?style=flat&label=Star)
 - [Hierarchical Aggregation for 3D Instance Segmentation](https://github.com/hustvl/HAIS) ![GitHub stars](https://img.shields.io/github/stars/hustvl/HAIS?style=flat&label=Star)
 - [PointGroup: Dual-Set Point Grouping for 3D Instance Segmentation](https://github.com/dvlab-research/PointGroup) ![GitHub stars](https://img.shields.io/github/stars/dvlab-research/PointGroup?style=flat&label=Star)
