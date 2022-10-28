@@ -9,6 +9,7 @@
 
 
 ## Updates
+* 10/23/2022: Congrats to our Urban3D team for successfully organizing the [Urban3D](https://urban3dchallenge.github.io/) workshop at ECCV 2022; Over 300 teams participated and competed on the [SensatUrban](https://github.com/QingyongHu/SensatUrban) (semantic segmentation) and [STPLS3D](https://www.stpls3d.com/) (instance segmentation) datasets. All winners surpassed our baseline methods by a large margin. [Replay of the workshop video is avaiable](https://www.youtube.com/watch?v=9TJUuXU_fnI).
 * 10/14/2022: Special thanks to [Jonas Schult](https://github.com/JonasSchult) for implementing Mask3D for STPLS3D - instance segmentation! Please refer to the official [Mask3D](https://github.com/JonasSchult/Mask3D) for implementation details, and download their pretrained model.
 * 10/13/2022: Our [Paper](https://arxiv.org/abs/2203.09065) is accepted as oral presentation at [BMVC2022](https://bmvc2022.org/)!
 * 06/28/2022: Special thanks to [Thang Vu](https://github.com/thangvubk) for implementing SoftGroup for STPLS3D - instance segmentation! Please refer to the official [SoftGroup](https://github.com/thangvubk/SoftGroup) for implementation details, and download their pretrained model.
