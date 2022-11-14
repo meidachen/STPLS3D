@@ -5,7 +5,7 @@
 # STPLS3D: A Large-Scale Synthetic and Real Aerial Photogrammetry 3D Point Cloud Dataset
 
 [Meida Chen](https://scholar.google.com/citations?user=ii7ZwfQAAAAJ&hl=en), [Qingyong Hu](https://qingyonghu.github.io/), [Zifan Yu](https://www.linkedin.com/in/zifan-yu-107775b1/), [Hugues Thomas](https://huguesthomas.github.io/), [Andrew Feng](https://scholar.google.com/citations?user=JKWxGfsAAAAJ&hl=en), [Yu Hou](https://www.yuhou.info/), [Kyle McCullough](https://ict.usc.edu/about-us/leadership/research-leadership/kyle-mccullough/), [Fengbo Ren](https://ren-fengbo.lab.asu.edu/content/fengbo-ren), [Lucio Soibelman](https://viterbi.usc.edu/directory/faculty/Soibelman/Lucio). <br />
-**[[Paper](https://arxiv.org/abs/2203.09065)] [[Project page](https://www.stpls3d.com/)] [[Video](https://youtu.be/6wYWVo6Cmfs)] [[Urban3D workshop@ECCV2022](https://urban3dchallenge.github.io/)] [[Instance segmentation competition](https://codalab.lisn.upsaclay.fr/competitions/4646)]** <br />
+**[[Project page](https://www.stpls3d.com/)] [[Paper](https://arxiv.org/abs/2203.09065)] [[BMVC presentation](https://youtu.be/X3Szzg7X8S4)] [[Demo video](https://youtu.be/6wYWVo6Cmfs)] [[Poster](https://github.com/meidachen/STPLS3D/blob/main/imgs/0429_poster.pdf)] [[Urban3D workshop@ECCV2022](https://urban3dchallenge.github.io/)] [[Instance segmentation competition](https://codalab.lisn.upsaclay.fr/competitions/4646)]** <br />
 
 
 ## Updates
