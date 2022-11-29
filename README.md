@@ -5,7 +5,7 @@
 # STPLS3D: A Large-Scale Synthetic and Real Aerial Photogrammetry 3D Point Cloud Dataset
 
 [Meida Chen](https://scholar.google.com/citations?user=ii7ZwfQAAAAJ&hl=en), [Qingyong Hu](https://qingyonghu.github.io/), [Zifan Yu](https://www.linkedin.com/in/zifan-yu-107775b1/), [Hugues Thomas](https://huguesthomas.github.io/), [Andrew Feng](https://scholar.google.com/citations?user=JKWxGfsAAAAJ&hl=en), [Yu Hou](https://www.yuhou.info/), [Kyle McCullough](https://ict.usc.edu/about-us/leadership/research-leadership/kyle-mccullough/), [Fengbo Ren](https://ren-fengbo.lab.asu.edu/content/fengbo-ren), [Lucio Soibelman](https://viterbi.usc.edu/directory/faculty/Soibelman/Lucio). <br />
-**[[Project page](https://www.stpls3d.com/)] [[Paper](https://arxiv.org/abs/2203.09065)] [[BMVC presentation](https://youtu.be/X3Szzg7X8S4)] [[Demo video](https://youtu.be/6wYWVo6Cmfs)] [[Poster](https://github.com/meidachen/STPLS3D/blob/main/imgs/0429_poster.pdf)] [[Urban3D workshop@ECCV2022](https://urban3dchallenge.github.io/)] [[Instance segmentation competition](https://codalab.lisn.upsaclay.fr/competitions/4646)]** <br />
+**[[Project page](https://www.stpls3d.com/)] [[Paper](https://bmvc2022.mpi-inf.mpg.de/429/)] [[BMVC presentation](https://youtu.be/X3Szzg7X8S4)] [[Demo video](https://youtu.be/6wYWVo6Cmfs)] [[Poster](https://github.com/meidachen/STPLS3D/blob/main/imgs/0429_poster.pdf)] [[Urban3D workshop@ECCV2022](https://urban3dchallenge.github.io/)] [[Instance segmentation competition](https://codalab.lisn.upsaclay.fr/competitions/4646)]** <br />
 
 
 ## Updates
@@ -236,13 +236,14 @@ we are organizing the [Urban3D@ECCV2022 - The 2nd Challenge on Large-Scale Point
 ## Citation
 If you find our work useful in your research, please consider citing:
 
-	@article{chen2022stpls3d,
-	  title={STPLS3D: A Large-Scale Synthetic and Real Aerial Photogrammetry 3D Point Cloud Dataset},
-	  author={Chen, Meida and Hu, Qingyong and Hugues, Thomas and Feng, Andrew and Hou, Yu and McCullough, Kyle and Soibelman, Lucio},
-	  journal={arXiv preprint arXiv:2203.09065},
-	  year={2022}
+	@inproceedings{Chen_2022_BMVC,
+	author    = {Meida Chen and Qingyong Hu and Zifan Yu and Hugues THOMAS and Andrew Feng and Yu Hou and Kyle McCullough and Fengbo Ren and Lucio Soibelman},
+	title     = {STPLS3D: A Large-Scale Synthetic and Real Aerial Photogrammetry 3D Point Cloud Dataset},
+	booktitle = {33rd British Machine Vision Conference 2022, {BMVC} 2022, London, UK, November 21-24, 2022},
+	publisher = {{BMVA} Press},
+	year      = {2022},
+	url       = {https://bmvc2022.mpi-inf.mpg.de/0429.pdf}
 	}
-
 
 ## Related Repos
 
