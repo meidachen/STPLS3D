@@ -28,10 +28,10 @@
 
 ### 2.1 Download
 
-- To download the STPLS3D point clouds for SEMANTIC segmentation click [Here](https://forms.gle/XwVNYmu8p3n3qsgGA).
-- To download the STPLS3D point clouds for INSTANCE segmentation click [Here](https://forms.gle/9FA7ZCH7MGWfAcAo6).
+- To download the STPLS3D point clouds for **Semantic Segmentation** click [Here](https://forms.gle/XwVNYmu8p3n3qsgGA).
+- To download the STPLS3D point clouds for **Instance Segmentation** click [Here](https://forms.gle/9FA7ZCH7MGWfAcAo6).
 - To download the unlabled testing datasets for [STPLS3D instance segmentation competition](https://codalab.lisn.upsaclay.fr/competitions/4646) click [Here](https://webdisk.ict.usc.edu/index.php/s/oqO0sgiZfoa6Ofr).
-- To download the **SOURCE IMAGES** for both synthetic and real-world datasets click [Here](https://forms.gle/fmpHSpTfS9CNyN5p6).
+- To download the **Source Images** for both synthetic and real-world datasets click [Here](https://forms.gle/fmpHSpTfS9CNyN5p6).
 
 ### 2.2 Overview
 
