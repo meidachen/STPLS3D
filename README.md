@@ -5,7 +5,7 @@
 # STPLS3D: A Large-Scale Synthetic and Real Aerial Photogrammetry 3D Point Cloud Dataset
 
 [Meida Chen](https://scholar.google.com/citations?user=ii7ZwfQAAAAJ&hl=en), [Qingyong Hu](https://qingyonghu.github.io/), [Zifan Yu](https://www.linkedin.com/in/zifan-yu-107775b1/), [Hugues Thomas](https://huguesthomas.github.io/), [Andrew Feng](https://scholar.google.com/citations?user=JKWxGfsAAAAJ&hl=en), [Yu Hou](https://www.yuhou.info/), [Kyle McCullough](https://ict.usc.edu/about-us/leadership/research-leadership/kyle-mccullough/), [Fengbo Ren](https://ren-fengbo.lab.asu.edu/content/fengbo-ren), [Lucio Soibelman](https://viterbi.usc.edu/directory/faculty/Soibelman/Lucio). <br />
-**[[Project page](https://www.stpls3d.com/)] [[Paper](https://bmvc2022.mpi-inf.mpg.de/429/)] [[BMVC presentation](https://youtu.be/X3Szzg7X8S4)] [[Demo video](https://youtu.be/6wYWVo6Cmfs)] [[Poster](https://bmvc2022.mpi-inf.mpg.de/0429_poster.pdf)] [[Urban3D workshop@ECCV2022](https://urban3dchallenge.github.io/)] [[Instance segmentation competition](https://codalab.lisn.upsaclay.fr/competitions/4646)]** <br />
+**[[Project page](https://www.stpls3d.com/)] [[Paper](https://bmvc2022.mpi-inf.mpg.de/429/)] [[BMVC presentation](https://youtu.be/X3Szzg7X8S4)] [[Demo video](https://youtu.be/6wYWVo6Cmfs)] [[Poster](https://bmvc2022.mpi-inf.mpg.de/0429_poster.pdf)] [[Urban3D workshop@ICCV2023](https://urban3dchallenge.github.io/)][[Urban3D workshop@ECCV2022](https://urban3dchallenge.github.io/2022/)] [[Instance segmentation competition](https://codalab.lisn.upsaclay.fr/competitions/4646)]** <br />
 
 
 ## Updates
@@ -234,7 +234,7 @@ You only need to keep the 300 txt files and the predicted_masks folder, and zip 
 
 ## (5) Instance segmentation challenge and evaluation server
 
-we are organizing the [Urban3D@ECCV2022 - The 2nd Challenge on Large-Scale Point Clouds Analysis for Urban Scenes Understanding](https://urban3dchallenge.github.io/). The instance segmentation challenge is on CodaLab! Please feel free to submit your results to our [evaluation server](https://codalab.lisn.upsaclay.fr/competitions/4646).  
+we are organizing the [Urban3D@ICCV2023 - The 3rd Challenge on Large-Scale Point Clouds Analysis for Urban Scenes Understanding](https://urban3dchallenge.github.io/). The instance segmentation challenge is on CodaLab! Please feel free to submit your results to our [evaluation server](https://codalab.lisn.upsaclay.fr/competitions/4646).  
 
 ## Citation
 If you find our work useful in your research, please consider citing:
