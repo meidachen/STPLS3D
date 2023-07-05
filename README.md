@@ -9,7 +9,7 @@
 
 
 ## Updates
-* 03/31/2022: we are organizing the [Urban3D@ICCV2023 - The 3rd Challenge on Large-Scale Point Clouds Analysis for Urban Scenes Understanding](https://urban3dchallenge.github.io/)!
+* 03/31/2023: we are organizing the [Urban3D@ICCV2023 - The 3rd Challenge on Large-Scale Point Clouds Analysis for Urban Scenes Understanding](https://urban3dchallenge.github.io/)!
 * 11/29/2022: All source images are released [Here](https://forms.gle/fmpHSpTfS9CNyN5p6).
 * 10/23/2022: Congrats to our Urban3D team for successfully organizing the [Urban3D](https://urban3dchallenge.github.io/) workshop at ECCV 2022; Over 300 teams participated and competed on the [SensatUrban](https://github.com/QingyongHu/SensatUrban) (semantic segmentation) and [STPLS3D](https://www.stpls3d.com/) (instance segmentation) datasets. All winners surpassed our baseline methods by a large margin. [Replay of the workshop video is available](https://www.youtube.com/watch?v=9TJUuXU_fnI).
 * 10/14/2022: Special thanks to [Jonas Schult](https://github.com/JonasSchult) for implementing Mask3D for STPLS3D - instance segmentation! Please refer to the official [Mask3D](https://github.com/JonasSchult/Mask3D) for implementation details, and download their pretrained model.
